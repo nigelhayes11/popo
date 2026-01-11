@@ -9,7 +9,6 @@ selcuk = 'selcuk.m3u'
 andro = 'an.m3u'
 tabii = 'tabii.m3u'
 kbl = 'kbl.m3u'
-vavoo = 'vavoo.m3u'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
@@ -18,19 +17,18 @@ def oku_m3u(dosya_adi):
         return [satir.strip() for satir in f if satir.strip()]
 
 # İçerikleri oku
-empty_icerik = oku_m3u(empty)
-karsilasmalar_icerik = oku_m3u(karsilasmalar)
-rec_icerik = oku_m3u(rec)
-rec2_icerik = oku_m3u(rec2)
-inattv_icerik = oku_m3u(inattv)
+ftb_icerik = oku_m3u(ftb)
+rec_icerik = oku_m3u(r)
+r2_icerik = oku_m3u(r2)
+inn_icerik = oku_m3u(inn)
 selcuk_icerik = oku_m3u(selcuk)
-andro_icerik = oku_m3u(andro)
+an_icerik = oku_m3u(an)
 tabii_icerik = oku_m3u(tabii)
-yeni_icerik = oku_m3u(yeni)
-vavoo_icerik = oku_m3u(vavoo)
+kbl_icerik = oku_m3u(kbl)
+
 
 # Birleştir
-birlesik_icerik = empty_icerik + karsilasmalar_icerik + rec_icerik + rec2_icerik + inattv_icerik + selcuk_icerik + andro_icerik + tabii_icerik + yeni_icerik
+birlesik_icerik = empty_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + tabii_icerik + kbl_icerik
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
