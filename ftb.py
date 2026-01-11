@@ -128,10 +128,10 @@ def main():
             full_url = f"{base_url}{cid}.m3u8"
             lines.append(full_url)
         
-        with open("karsilasmalar.m3u", "w", encoding="utf-8") as f:
+        with open("man26.m3u", "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
         
-        print(f"✅ karsilasmalar.m3u başarıyla oluşturuldu ({len(channels)} kanal)")
+        print(f"✅ man26.m3u başarıyla oluşturuldu ({len(channels)} kanal)")
         return 0
         
     except Exception as e:
