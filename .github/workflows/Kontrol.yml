@@ -39,18 +39,18 @@ jobs:
       - name: selcuk.py Çalıştır
         continue-on-error: true
         run: python selcuk.py
-      - name: rec.py Çalıştır
+      - name: r.py Çalıştır
         continue-on-error: true
         run: python rec.py
-      - name: rec2.py Çalıştır
+      - name: r2.py Çalıştır
         continue-on-error: true
-        run: python rec2.py
-      - name: karsilasmalar.py Çalıştır
+        run: python r2.py
+      - name: ftb.py Çalıştır
         continue-on-error: true
-        run: python karsilasmalar.py
-      - name: gbl.py Çalıştır
+        run: python ftb.py
+      - name: ftb.py Çalıştır
         continue-on-error: true
-        run: python gbl.py        
+        run: python ftb.py        
       - name: birlestir.py Çalıştır
         continue-on-error: true
         run: python birlestir.py        
