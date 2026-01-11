@@ -84,4 +84,5 @@ if __name__ == "__main__":
     
     if domain:
         # M3U dosyasını güncelle
-        fetcher.update_m3u_domains("rec.m3u", domain)
+
+        fetcher.update_m3u_domains("r2.m3u", domain)
