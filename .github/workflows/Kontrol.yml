@@ -31,9 +31,9 @@ jobs:
         continue-on-error: true
         run: python inn.py
       
-      - name: androtv.py Çalıştır
+      - name: an.py Çalıştır
         continue-on-error: true
-        run: python androtv.py
+        run: python an.py
       - name: selcuk.py Çalıştır
         continue-on-error: true
         run: python selcuk.py
