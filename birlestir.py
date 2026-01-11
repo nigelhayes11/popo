@@ -1,14 +1,14 @@
 # Birleştirilecek dosya adları
 #goals = 'goals.m3u'
 empty = 'empty.m3u'
-karsilasmalar = 'karsilasmalar.m3u'
-rec = 'rec.m3u'
-rec2 = 'rec2.m3u'
+ftb = 'ftb.m3u'
+r = 'r.m3u'
+r2 = 'r2.m3u'
 inattv = 'inattv.m3u'
 selcuk = 'selcuk.m3u'
 andro = 'androtv.m3u'
 tabii = 'tabii.m3u'
-yeni = 'yeni.m3u'
+kbl = 'kbl.m3u'
 vavoo = 'vavoo.m3u'
 cikis_dosyasi = 'man26.m3u'
 
