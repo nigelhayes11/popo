@@ -10,7 +10,7 @@ andro = 'androtv.m3u'
 tabii = 'tabii.m3u'
 yeni = 'yeni.m3u'
 vavoo = 'vavoo.m3u'
-cikis_dosyasi = 'karisik.m3u'
+cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
 def oku_m3u(dosya_adi):
