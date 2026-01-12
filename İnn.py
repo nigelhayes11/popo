@@ -109,10 +109,10 @@ def main():
             full_url = f"{base_url}{cid}.m3u8"
             lines.append(full_url)
         
-        with open("inattv.m3u", "w", encoding="utf-8") as f:
+        with open("inn.m3u", "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
         
-        print(f"✅ inattv.m3u başarıyla oluşturuldu ({len(channel_ids)} kanal)")
+        print(f"✅ inn.m3u başarıyla oluşturuldu ({len(channel_ids)} kanal)")
         return 0
         
     except Exception as e:
@@ -124,7 +124,7 @@ def main():
 def create_empty_m3u():
     """Hata durumunda boş/placeholder M3U dosyası oluştur"""
     try:
-        with open("inattv.m3u", "w", encoding="utf-8") as f:
+        with open("inn.m3u", "w", encoding="utf-8") as f:
             f.write("#EXTM3U\n")
             f.write("# Kanal listesi şu anda kullanılamıyor\n")
         print("✅ Placeholder M3U dosyası oluşturuldu")
@@ -134,6 +134,7 @@ def create_empty_m3u():
 if __name__ == "__main__":
     exit_code = main()
     sys.exit(exit_code)
+
 
 
 
