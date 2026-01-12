@@ -1,4 +1,4 @@
-[15:32, 12.01.2026] Manuk: name: Kontrol
+name: Kontrol
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
