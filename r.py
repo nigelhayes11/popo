@@ -393,7 +393,7 @@ def main():
     with open('r.m3u', 'w', encoding='utf-8') as f:
         f.write(m3u_content)
     
-    print(f"\nOluşturulan M3U dosyası: rectv.m3u")
+    print(f"\nOluşturulan M3U dosyası: r.m3u")
     print("İşlem tamamlandı!")
 
 if __name__ == "__main__":
