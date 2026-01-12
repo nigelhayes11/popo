@@ -55,7 +55,11 @@ jobs:
       - name: ftb.py
         continue-on-error: true
         run: python ftb.py
-
+        
+       - name: gl.py
+        continue-on-error: true
+        run: python gl.py
+        
       - name: birlestir.py
         continue-on-error: true
         run: python birlestir.py
