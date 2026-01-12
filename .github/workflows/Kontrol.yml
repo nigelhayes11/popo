@@ -12,7 +12,6 @@ on:
 jobs:
   BirlesikGuncelleme:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
@@ -20,7 +19,7 @@ jobs:
       - name: Depoyu Klonla
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # ⚠️ REBASE için şart
+          fetch-depth: 0
 
       - name: Python 3.11.8 Yükle
         uses: actions/setup-python@v5
@@ -32,84 +31,44 @@ jobs:
           python -m pip install --upgrade pip
           pip install -U setuptools wheel Kekik httpx parsel requests cloudscraper beautifulsoup4
 
-      - name: inn.py Çalıştır
-        continue-on-er…
-[15:33, 12.01.2026] Manuk: name: Kontrol
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '*/5 * * * *'
-
-jobs:
-  BirlesikGuncelleme:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: Depoyu Klonla
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0   # ⚠️ REBASE için şart
-
-      - name: Python 3.11.8 Yükle
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.11.8
-
-      - name: Gereksinimleri Kur
-        run: |
-          python -m pip install --upgrade pip
-          pip install -U setuptools wheel Kekik httpx parsel requests cloudscraper beautifulsoup4
-
-      - name: inn.py Çalıştır
+      - name: inn.py
         continue-on-error: true
         run: python inn.py
 
-      - name: an.py Çalıştır
+      - name: an.py
         continue-on-error: true
         run: python an.py
 
-      - name: selcuk.py Çalıştır
+      - name: selcuk.py
         continue-on-error: true
         run: python selcuk.py
 
-      - name: r.py Çalıştır
+      - name: r.py
         continue-on-error: true
         run: python r.py
 
-      - name: r2.py Çalıştır
+      - name: r2.py
         continue-on-error: true
         run: python r2.py
 
-      - name: ftb.py Çalıştır
+      - name: ftb.py
         continue-on-error: true
         run: python ftb.py
 
-      - name: birlestir.py Çalıştır
+      - name: birlestir.py
         continue-on-error: true
         run: python birlestir.py
 
-      # 🔑 EN KRİTİK NOKTA
-      - name: Remote ile Senkronla (Pull)
-        run: git pull --rebase origin main
-
       - name: Değişiklik Kontrolü
-        id: degisiklik
+        id: diff
         run: |
           git diff --quiet || echo "var=true" >> $GITHUB_OUTPUT
 
-      - name: Commit ve Push
-        if: steps.degisiklik.outputs.var == 'true'
+      - name: Commit & Push (GARANTİLİ)
+        if: steps.diff.outputs.var == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "🔄 Kanallar otomatik güncellendi"
-          git push
+          git commit -m "🔄 Otomatik M3U güncelleme" || exit 0
+          git push --force-with-lease
