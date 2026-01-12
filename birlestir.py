@@ -1,7 +1,7 @@
 # Birleştirilecek dosya adları
 #goals = 'goals.m3u'
 empty = 'empty.m3u'
-karsilasmalar = 'ftb.m3u'
+ftb = 'ftb.m3u'
 rec = 'rec.m3u'
 rec2 = 'rec2.m3u'
 inattv = 'inattv.m3u'
