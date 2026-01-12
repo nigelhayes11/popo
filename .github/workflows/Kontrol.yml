@@ -1,7 +1,7 @@
 name: Kontrol
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 on:
@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Depoyu Klonla
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # ⚠️ REBASE için şart
 
       - name: Python 3.11.8 Yükle
         uses: actions/setup-python@v5
@@ -37,41 +39,3 @@ jobs:
       - name: an.py Çalıştır
         continue-on-error: true
         run: python an.py
-
-      - name: selcuk.py Çalıştır
-        continue-on-error: true
-        run: python selcuk.py
-
-      - name: r.py Çalıştır
-        continue-on-error: true
-        run: python r.py
-
-      - name: r2.py Çalıştır
-        continue-on-error: true
-        run: python r2.py
-
-      - name: ftb.py Çalıştır
-        continue-on-error: true
-        run: python ftb.py
-
-      - name: birlestir.py Çalıştır
-        continue-on-error: true
-        run: python birlestir.py
-
-      - name: Değişiklik Kontrolü
-        id: degisiklik_kontrol
-        run: |
-          git diff --quiet . || echo "degisiklik=true" >> $GITHUB_OUTPUT
-
-      - name: Son Değişiklikleri Çek (Pull)
-        if: steps.degisiklik_kontrol.outputs.degisiklik == 'true'
-        run: git pull --rebase origin main
-
-      - name: Değişiklikleri Commit Et ve Pushla
-        if: steps.degisiklik_kontrol.outputs.degisiklik == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "🔄 Kanallar güncellendi" || echo "Commit yok"
-          git push
