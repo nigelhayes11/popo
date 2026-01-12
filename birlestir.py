@@ -1,15 +1,11 @@
 # Birleştirilecek dosya adları
-#goals = 'goals.m3u'
-empty = 'empty.m3u'
 ftb = 'ftb.m3u'
-rec = 'rec.m3u'
-rec2 = 'rec2.m3u'
-inattv = 'inattv.m3u'
+r = 'r.m3u'
+r2 = 'r2.m3u'
+inn = 'inn.m3u'
 selcuk = 'selcuk.m3u'
-andro = 'androtv.m3u'
-tabii = 'tabii.m3u'
-yeni = 'yeni.m3u'
-vavoo = 'vavoo.m3u'
+an = 'an.m3u'
+kbl = 'kbl.m3u'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
@@ -18,19 +14,17 @@ def oku_m3u(dosya_adi):
         return [satir.strip() for satir in f if satir.strip()]
 
 # İçerikleri oku
-empty_icerik = oku_m3u(empty)
 ftb_icerik = oku_m3u(ftb)
-rec_icerik = oku_m3u(rec)
-rec2_icerik = oku_m3u(rec2)
-inattv_icerik = oku_m3u(inattv)
+r_icerik = oku_m3u(r)
+r2_icerik = oku_m3u(r2)
+inn_icerik = oku_m3u(inn)
 selcuk_icerik = oku_m3u(selcuk)
-andro_icerik = oku_m3u(andro)
-tabii_icerik = oku_m3u(tabii)
-yeni_icerik = oku_m3u(yeni)
-vavoo_icerik = oku_m3u(vavoo)
+an_icerik = oku_m3u(an)
+kbl_icerik = oku_m3u(kbl)
+
 
 # Birleştir
-birlesik_icerik = empty_icerik + ftb_icerik + rec_icerik + rec2_icerik + inattv_icerik + selcuk_icerik + andro_icerik + tabii_icerik + yeni_icerik
+birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik 
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
