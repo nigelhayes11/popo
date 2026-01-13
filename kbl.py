@@ -53,5 +53,5 @@ def main():
     except Exception as e:
         print("⚠️ kbl hata ama geçiliyor:", e)
 
-if _name_ == "_main_":
-    main()
+if __name__ == "__main__":
+    get_canli_tv_m3u()
