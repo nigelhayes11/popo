@@ -56,7 +56,9 @@ jobs:
         continue-on-error: true
         run: python ftb.py
         
- 
+       - name: kbl.py
+        continue-on-error: true
+        run: python kbl.py
         
       - name: birlestir.py
         continue-on-error: true
