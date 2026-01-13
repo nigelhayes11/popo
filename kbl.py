@@ -3,38 +3,36 @@ import json
 import gzip
 from io import BytesIO
 
-def main():
+def kbl_guncelle():
     url = "https://core-api.kablowebtv.com/api/channels"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Referer": "https://tvheryerde.com",
         "Origin": "https://tvheryerde.com",
-        "Cache-Control": "max-age=0",
-        "Connection": "keep-alive",
         "Accept-Encoding": "gzip",
-        "Authorization": "Bearer XXXXX"  # token'ı buraya koy
+        "Authorization": "Bearer XXXXX"  # Token buraya
     }
-
     params = {"checkip": "false"}
 
     try:
-        print("📡 CanliTV API'den veri alınıyor...")
+        print("📡 KBL API çağrılıyor...")
         response = requests.get(url, headers=headers, params=params, timeout=30)
         response.raise_for_status()
 
+        # Gzip kontrol
         try:
             with gzip.GzipFile(fileobj=BytesIO(response.content)) as gz:
-                content = gz.read().decode('utf-8')
+                content = gz.read().decode("utf-8")
         except:
-            content = response.content.decode('utf-8')
+            content = response.content.decode("utf-8")
 
         data = json.loads(content)
-        channels = data.get('Data', {}).get('AllChannels', [])
+        channels = data.get("Data", {}).get("AllChannels", [])
 
         if not channels:
-            print("⚠️ KBL: Kanal yok")
-            return
+            print("⚠️ KBL: Kanal listesi boş, kbl.m3u oluşturulacak ama içerik yok.")
 
+        # Dosya yaz
         with open("kbl.m3u", "w", encoding="utf-8") as f:
             f.write("\n")
             index = 1
@@ -52,10 +50,17 @@ def main():
                 f.write(f"{hls}\n")
                 index += 1
 
-        print(f"📺 kbl.m3u dosyası oluşturuldu! ({index-1} kanal)")
+        print(f"✅ kbl.m3u güncellendi! ({index-1} kanal)")
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ KBL API Hata: {e}. kbl.m3u boş oluşturulacak.")
+        with open("kbl.m3u", "w", encoding="utf-8") as f:
+            f.write("\n")  # boş dosya oluştur
 
     except Exception as e:
-        print("⚠️ KBL Hata ama geçiliyor:", e)
+        print(f"❌ KBL Beklenmeyen Hata: {e}. kbl.m3u boş oluşturulacak.")
+        with open("kbl.m3u", "w", encoding="utf-8") as f:
+            f.write("\n")  # boş dosya oluştur
 
-if __name__ == "__main__":
-    main()
+if _name_ == "_main_":
+    kbl_guncelle()
