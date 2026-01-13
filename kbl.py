@@ -3,7 +3,8 @@ import json
 import gzip
 from io import BytesIO
 
-def main():
+def get_canli_tv_m3u():
+    """"""
     url = "https://core-api.kablowebtv.com/api/channels"
 
     headers = {
