@@ -3,7 +3,7 @@ import json
 import gzip
 from io import BytesIO
 
-def get_canli_tv_m3u():
+def main():
     """"""
     url = "https://core-api.kablowebtv.com/api/channels"
 
@@ -55,4 +55,4 @@ def get_canli_tv_m3u():
         print("⚠️ kbl hata ama geçiliyor:", e)
 
 if __name__ == "__main__":
-    get_canli_tv_m3u()
+    main()
