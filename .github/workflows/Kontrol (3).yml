@@ -55,11 +55,11 @@ jobs:
       - name: ftb.py
         continue-on-error: true
         run: python ftb.py
-        
-       - name: kbl.py
+
+      - name: kbl.py
         continue-on-error: true
         run: python kbl.py
-        
+
       - name: birlestir.py
         continue-on-error: true
         run: python birlestir.py
@@ -69,11 +69,11 @@ jobs:
         run: |
           git diff --quiet || echo "var=true" >> $GITHUB_OUTPUT
 
-      - name: Commit & FORCE Push (KESİN)
+      - name: Commit & Push
         if: steps.diff.outputs.var == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "🔄 Otomatik M3U güncelleme" || exit 0
-          git push --force
+          git push
