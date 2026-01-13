@@ -42,7 +42,7 @@ def get_canli_tv_m3u():
         channels = data['Data']['AllChannels']
         print(f"✅ {len(channels)} kanal bulundu")
         
-        with open("yeni.m3u", "w", encoding="utf-8") as f:
+        with open("kbl.m3u", "w", encoding="utf-8") as f:
             f.write("\n")
             
             kanal_sayisi = 0
@@ -71,7 +71,7 @@ def get_canli_tv_m3u():
                 kanal_sayisi += 1
                 kanal_index += 1  
         
-        print(f"📺 yeni.m3u dosyası oluşturuldu! ({kanal_sayisi} kanal)")
+        print(f"📺 kbl.m3u dosyası oluşturuldu! ({kanal_sayisi} kanal)")
         return True
         
     except Exception as e:
