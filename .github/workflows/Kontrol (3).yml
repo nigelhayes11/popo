@@ -30,7 +30,9 @@ jobs:
       - name: inn.py Çalıştır
         continue-on-error: true
         run: python inn.py
-      
+      - name: NexaTV.py Çalıştır
+        continue-on-error: true
+        run: python NexaTV.py  
       - name: an.py Çalıştır
         continue-on-error: true
         run: python an.py
