@@ -24,7 +24,7 @@ selcuk_icerik = oku_m3u(selcuk)
 an_icerik = oku_m3u(an)
 kbl_icerik = oku_m3u(kbl)
 ne_icerik = oku_m3u(ne)
-
+rnl_icerik = oku_m3u(rnl)
 
 
 # Birleştir
