@@ -6,7 +6,7 @@ inn = 'inn.m3u'
 selcuk = 'selcuk.m3u'
 an = 'an.m3u'
 kbl = 'kbl.m3u'
-
+NexaTV = 'ne.m3u'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
@@ -22,11 +22,12 @@ inn_icerik = oku_m3u(inn)
 selcuk_icerik = oku_m3u(selcuk)
 an_icerik = oku_m3u(an)
 kbl_icerik = oku_m3u(kbl)
+ne_icerik = oku_m3u(ne)
 
 
 
 # Birleştir
-birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik 
+birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik 
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
