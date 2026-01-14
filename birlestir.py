@@ -6,7 +6,7 @@ inn = 'inn.m3u'
 selcuk = 'selcuk.m3u'
 an = 'an.m3u'
 kbl = 'kbl.m3u'
-NexaTV = 'ne.m3u'
+ne = 'ne.m3u'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
