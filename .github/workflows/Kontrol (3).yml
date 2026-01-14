@@ -51,10 +51,12 @@ jobs:
       - name: kbl.py Çalıştır
         continue-on-error: true
         run: python kbl.py        
+      - name: rnl.py Çalıştır
+        continue-on-error: true
+        run: python rnl.py        
       - name: birlestir.py Çalıştır
         continue-on-error: true
-        run: python birlestir.py        
-      
+        run: python birlestir.py 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
