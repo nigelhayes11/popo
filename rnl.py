@@ -4,7 +4,7 @@ import time
 
 # AtomSporTV
 START_URL = "https://url24.link/AtomSporTV"
-OUTPUT_FILE = "atom.m3u"
+OUTPUT_FILE = "rnl.m3u"
 
 GREEN = "\033[92m"
 RESET = "\033[0m"
