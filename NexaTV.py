@@ -67,7 +67,7 @@ def gorevi_calistir():
     print(f"--- NexaTV Görevi Başlatıldı ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')}) ---")
     manager = NexaTVManager()
     m3u_content = manager.calistir()
-    file_name = "NexaTV.m3u"
+    file_name = "ne.m3u"
 
     try:
         with open(file_name, "w", encoding="utf-8") as f:
@@ -81,6 +81,7 @@ def gorevi_calistir():
 
 if __name__ == "__main__":
     gorevi_calistir()
+
 
 
 
