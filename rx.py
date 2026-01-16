@@ -251,9 +251,9 @@ async def scrape(client: httpx.AsyncClient) -> None:
                 log.info(f"Skipping non-working link: {url} (status {resp.status_code})")
         except Exception as e:
             log.info(f"Skipping non-working link: {url} ({e})")
-    with open("roxie.m3u", "w", encoding="utf-8") as f:
+    with open("rx.m3u", "w", encoding="utf-8") as f:
         f.write("\n".join(m3u_lines))
-    log.info("Exported working events to roxie.m3u")
+    log.info("Exported working events to rx.m3u")
 
 if __name__ == "__main__":
     async def main():
