@@ -160,7 +160,7 @@ def main():
 
         logging.info(f"  Added {valid_count} valid streams for {group_name} section.")
 
-    output_filename = "rx.m3u8"
+    output_filename = "rx.m3u"
     try:
         with open(output_filename, "w", encoding="utf-8") as f:
             f.write("\n".join(playlist_lines))
@@ -173,5 +173,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
