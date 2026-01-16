@@ -153,14 +153,14 @@ def main():
             for link in m3u8_links:
                 if check_stream_status(link):
                     playlist_lines.append(
-                        f'#EXTINF:-1 tvg-logo="{logo}" tvg-id="{tv_id}" group-title="Roxiestreams - {group_name}",{event_title}'
+                        f'#EXTINF:-1 tvg-logo="{logo}" tvg-id="{tv_id}" group-title="NBA+NHL+FTBL - {group_name}",{event_title}'
                     )
                     playlist_lines.append(link)
                     valid_count += 1
 
         logging.info(f"  Added {valid_count} valid streams for {group_name} section.")
 
-    output_filename = "Roxiestreams.m3u8"
+    output_filename = "rx.m3u8"
     try:
         with open(output_filename, "w", encoding="utf-8") as f:
             f.write("\n".join(playlist_lines))
@@ -173,4 +173,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
