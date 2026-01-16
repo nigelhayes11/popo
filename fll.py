@@ -8,7 +8,7 @@ an = 'an.m3u'
 kbl = 'kbl.m3u'
 ne = 'ne.m3u'
 rnl = 'rnl.m3u'
-rx = 'rx.m3u'
+rx = 'rx.m3u8'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
@@ -26,7 +26,7 @@ an_icerik = oku_m3u(an)
 kbl_icerik = oku_m3u(kbl)
 ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
-rx_icerik = oku_m3u(rx)
+rx_icerik = oku_m3u8(rx)
 
 
 # Birleştir
