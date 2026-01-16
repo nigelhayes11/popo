@@ -1,0 +1,67 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Ligue 1
+https://daffodil.shadow-ran.online/golazo.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Laliga
+https://daffodil.shadow-ran.online/colo.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Laliga
+https://602.shadow-ran.online/coloalt.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",TSZYU vs ZERAFA
+https://daffodil.shadow-ran.online/ppv.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",TSZYU vs ZERAFA
+https://daffodil.shadow-ran.online/ppv2.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",TSZYU vs ZERAFA
+https://602.shadow-ran.online/ppv.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Espanyol vs Girona
+https://daffodil.shadow-ran.online/colo.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Espanyol vs Girona
+https://602.shadow-ran.online/coloalt.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Monaco vs Lorient
+https://daffodil.shadow-ran.online/golazo.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",MazatlÃ¡n vs Monterrey
+https://602.shadow-ran.online/benfica.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",MazatlÃ¡n vs Monterrey
+https://amg01334-beinsportsllc-beinxtra-localnow-kcy6r.amagi.tv/playlistR1080p.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Pisa vs Atalanta
+https://daffodil.shadow-ran.online/cbssn.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Pisa vs Atalanta
+https://daffodil.shadow-ran.online/tnt.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",West Bromwich Albion vs Middlesbrough
+https://602.shadow-ran.online/sportv.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",PSG vs Lille
+https://daffodil.shadow-ran.online/golazo.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Werder Bremen vs Frankfurt
+https://daffodil.shadow-ran.online/one.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",Chicago Bulls vs Brooklyn Nets
+https://daffodil.shadow-ran.online/nba3.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",Cleveland Cavaliers vs Philadelphia 76ers
+https://daffodil.shadow-ran.online/nba2.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",Minnesota Timberwolves vs Houston Rockets
+https://daffodil.shadow-ran.online/nba5.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",New Orleans Pelicans vs Indiana Pacers
+https://daffodil.shadow-ran.online/nba.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",Washington Wizards vs Sacramento Kings
+https://daffodil.shadow-ran.online/nba6.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Basketball-2.png" tvg-id="NBA.Basketball.Dummy.us" group-title="NBA+NHL+FTBL - NBA",Los Angeles Clippers vs Toronto Raptors
+https://daffodil.shadow-ran.online/nba4.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",San Jose Sharks vs Detroit Red Wings
+https://602.shadow-ran.online/nhl.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Tampa Bay Lightning vs St. Louis Blues
+https://602.shadow-ran.online/nhl3.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Nashville Predators vs Colorado Avalanche
+https://602.shadow-ran.online/nhl4.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Florida Panthers vs Carolina Hurricanes
+https://602.shadow-ran.online/nhl2.m3u8
+#EXTINF:-1 tvg-logo="" tvg-id="Unknown.Dummy.us" group-title="NBA+NHL+FTBL - Misc",Anaheim Ducks vs Los Angeles Kings
+https://602.shadow-ran.online/nhl5.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/PPV.png" tvg-id="PPV.EVENTS.Dummy.us" group-title="NBA+NHL+FTBL - PPV",TSZYU vs ZERAFA
+https://daffodil.shadow-ran.online/ppv.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/PPV.png" tvg-id="PPV.EVENTS.Dummy.us" group-title="NBA+NHL+FTBL - PPV",TSZYU vs ZERAFA
+https://daffodil.shadow-ran.online/ppv2.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/PPV.png" tvg-id="PPV.EVENTS.Dummy.us" group-title="NBA+NHL+FTBL - PPV",TSZYU vs ZERAFA
+https://602.shadow-ran.online/ppv.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Ligue 1
+https://daffodil.shadow-ran.online/golazo.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Laliga
+https://daffodil.shadow-ran.online/colo.m3u8
+#EXTINF:-1 tvg-logo="http://drewlive24.duckdns.org:9000/Logos/Soccer.png" tvg-id="Soccer.Dummy.us" group-title="NBA+NHL+FTBL - Soccer",Laliga
+https://602.shadow-ran.online/coloalt.m3u8
