@@ -56,7 +56,10 @@ jobs:
         run: python rnl.py        
       - name: fll.py Çalıştır
         continue-on-error: true
-        run: python fll.py 
+        run: python fll.py
+      - name: rx.py Çalıştır
+        continue-on-error: true
+        run: python rx.py 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
