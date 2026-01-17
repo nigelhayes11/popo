@@ -1,76 +1,148 @@
 import requests
-
-# Domain aralığı (949 ve sonrası)
-DOMAIN_START = 949
-DOMAIN_END = 1500
-
-# Çıktı dosyası
-OUTPUT_FILE = "jst.m3u"
-
-# Sabit kanal listesi
-CHANNELS = {
-    "yayinzirve": "beIN Sports 1 A",
-    "yayininat": "beIN Sports 1 B",
-    "yayin1": "beIN Sports 1 C",
-    "yayinb2": "beIN Sports 2",
-    "yayinb3": "beIN Sports 3",
-    "yayinb4": "beIN Sports 4",
-    "yayinb5": "beIN Sports 5",
-    "yayinbm1": "beIN Sports 1 Max",
-    "yayinbm2": "beIN Sports 2 Max",
-    "yayinss": "S Sports 1",
-    "yayinss2": "S Sports 2",
-    "yayint1": "Tivibu Sports 1",
-    "yayint2": "Tivibu Sports 2",
-    "yayint3": "Tivibu Sports 3",
-    "yayint4": "Tivibu Sports 4",
-    "yayinsmarts": "Smart Sports",
-    "yayinsms2": "Smart Sports 2",
-    "yayineu1": "Euro Sport 1",
-    "yayineu2": "Euro Sport 2",
-    "yayinex1": "Tâbii 1",
-    "yayinex2": "Tâbii 2",
-    "yayinex3": "Tâbii 3",
-    "yayinex4": "Tâbii 4",
-    "yayinex5": "Tâbii 5",
-    "yayinex6": "Tâbii 6",
-    "yayinex7": "Tâbii 7",
-    "yayinex8": "Tâbii 8"
-}
-
-def find_active_domain():
-    for i in range(DOMAIN_START, DOMAIN_END):
-        url = f"https://jestyayin{i}.com/"
-        try:
-            r = requests.head(url, timeout=5)
-            if r.status_code == 200:
-                print(f"✅ Aktif domain bulundu: {url}")
-                return url
-        except:
-            continue
-    return None
-
-def create_m3u(domain):
-    lines = ["#EXTM3U"]
-    for path, name in CHANNELS.items():
-        lines.append(f'#EXTINF:-1 group-title="Jest TV",{name}')
-        lines.append(f'{domain}/{path}.m3u8')
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
-    print(f"✅ {OUTPUT_FILE} başarıyla oluşturuldu ({len(CHANNELS)} kanal)")
-
-def create_placeholder():
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n# Kanal listesi şu anda kullanılamıyor\n")
-    print("⚠️ Placeholder M3U dosyası oluşturuldu")
+import re
+import sys
 
 def main():
-    domain = find_active_domain()
-    if domain:
-        create_m3u(domain)
-    else:
-        print("⚠️ Aktif domain bulunamadı.")
-        create_placeholder()
+    try:
+        # Domain aralığı (25–99)
+        active_domain = None
+        print("🔍 Aktif domain aranıyor...")
+        
+        for i in range(520, 1000):
+            url = f"https://monotv{i}.xyz/"
+            try:
+                r = requests.head(url, timeout=5)
+                if r.status_code == 200:
+                    active_domain = url
+                    print(f"✅ Aktif domain bulundu: {active_domain}")
+                    break
+            except Exception as e:
+                continue
+        
+        if not active_domain:
+            print("⚠️  Aktif domain bulunamadı. Boş M3U dosyası oluşturuluyor...")
+            create_empty_m3u()
+            return 0
+        
+        # İlk kanal ID'si al
+        print("📡 Kanal ID'si alınıyor...")
+        try:
+            html = requests.get(active_domain, timeout=10).text
+            m = re.search(r'<iframe[^>]+id="customIframe"[^>]+src="/channel.html\?id=([^"]+)"', html)
+            
+            if not m:
+                print("⚠️  Kanal ID bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            first_id = m.group(1)
+            print(f"✅ Kanal ID bulundu: {first_id}")
+            
+        except Exception as e:
+            print(f"⚠️  HTML alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Base URL çek
+        print("🔗 Base URL alınıyor...")
+        try:
+            event_source = requests.get(active_domain + "channel.html?id=" + first_id, timeout=10).text
+            b = re.search(r'B_URL\s*=\s*["\']([^"\']+)["\']', event_source)
+            
+            if not b:
+                print("⚠️  Base URL bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            base_url = b.group(1)
+            print(f"✅ Base URL bulundu: {base_url}")
+            
+        except Exception as e:
+            print(f"⚠️  Event source alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Kanal listesi
+        channel_ids = {
+            "yayinzirve": ["beIN Sports 1 A", "Inat TV"],
+            "yayininat":  ["beIN Sports 1 B", "Inat TV"],
+            "yayin1":     ["beIN Sports 1 C️", "Inat TV"],
+            "yayinb2":    ["beIN Sports 2", "Inat TV"],
+            "yayinb3":    ["beIN Sports 3", "Inat TV"],
+            "yayinb4":    ["beIN Sports 4", "Inat TV"],
+            "yayinb5":    ["beIN Sports 5", "Inat TV"],
+            "yayinbm1":   ["beIN Sports 1 Max", "Inat TV"],
+            "yayinbm2":   ["beIN Sports 2 Max", "Inat TV"],
+            "yayinss":    ["S Sports 1", "Inat TV"],
+            "yayinss2":   ["S Sports 2", "Inat TV"],
+            "yayint1":    ["Tivibu Sports 1", "Inat TV"],
+            "yayint2":    ["Tivibu Sports 2", "Inat TV"],
+            "yayint3":    ["Tivibu Sports 3", "Inat TV"],
+            "yayint4":    ["Tivibu Sports 4", "Inat TV"],
+            "yayinsmarts":["Smart Sports", "Inat TV"],
+            "yayinsms2":  ["Smart Sports 2", "Inat TV"],
+            "yayineu1":  ["Euro Sport 1", "Inat TV"],
+            "yayineu2":  ["Euro Sport 2", "Inat TV"],
+            "yayinex1":   ["Tâbii 1", "Inat TV"],
+            "yayinex2":   ["Tâbii 2", "Inat TV"],
+            "yayinex3":   ["Tâbii 3", "Inat TV"],
+            "yayinex4":   ["Tâbii 4", "Inat TV"],
+            "yayinex5":   ["Tâbii 5", "Inat TV"],
+            "yayinex6":   ["Tâbii 6", "Inat TV"],
+            "yayinex7":   ["Tâbii 7", "Inat TV"],
+            "yayinex8":   ["Tâbii 8", "Inat TV"]
+        }
+        
+        # M3U dosyası oluştur
+        print("📝 M3U dosyası oluşturuluyor...")
+        lines = ["\n"]
+        for cid, details in channel_ids.items():
+            name = details[0]  # Listenin ilk elemanı: Kanal Adı (Örn: beIN Sports 1 A)
+            title = details[1] # Listenin ikinci elemanı: Grup (Örn: Inat TV)
+            
+            # EXTM3U satırını oluştur
+            lines.append(f'#EXTINF:-1 group-title="Inat TV" ,{name}')
+            lines.append(f'#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)')
+            lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
+            
+            # URL satırını oluştur (Sözlük anahtarı olan 'cid' kullanılıyor)
+            full_url = f"{base_url}{cid}.m3u8"
+            lines.append(full_url)
+        
+        with open("jst.m3u", "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        
+        print(f"✅ jst.m3u başarıyla oluşturuldu ({len(channel_ids)} kanal)")
+        return 0
+        
+    except Exception as e:
+        print(f"❌ Beklenmeyen hata: {str(e)}")
+        print("⚠️  Boş M3U dosyası oluşturuluyor...")
+        create_empty_m3u()
+        return 0
+
+def create_empty_m3u():
+    """Hata durumunda boş/placeholder M3U dosyası oluştur"""
+    try:
+        with open("jst.m3u", "w", encoding="utf-8") as f:
+            f.write("#EXTM3U\n")
+            f.write("# Kanal listesi şu anda kullanılamıyor\n")
+        print("✅ Placeholder M3U dosyası oluşturuldu")
+    except Exception as e:
+        print(f"❌ M3U dosyası oluşturulamadı: {str(e)}")
 
 if __name__ == "__main__":
-    main()
+    exit_code = main()
+    sys.exit(exit_code)
+
+
+
+
+
+
+
+
+
+
+
+
