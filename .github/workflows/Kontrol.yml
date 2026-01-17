@@ -66,7 +66,9 @@ jobs:
       - name: osi.py Çalıştır
         continue-on-error: true
         run: python osi.py
-      
+      - name: liveeventsfilter.py Çalıştır
+        continue-on-error: true
+        run: python liveeventsfilter.py
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
