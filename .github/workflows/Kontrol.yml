@@ -66,7 +66,9 @@ jobs:
       - name: mj.py Çalıştır
         continue-on-error: true
         run: python mj.py
-
+      - name: osi.py Çalıştır
+        continue-on-error: true
+        run: python osi.py
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
