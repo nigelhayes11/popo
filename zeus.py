@@ -1,102 +1,137 @@
 import requests
 import re
-import time
-
-START_URL = "https://zeustv173.com/"
-OUTPUT_FILE = "zeustv173.m3u"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36",
-    "Accept": "/",
-    "Accept-Language": "tr-TR,tr;q=0.9",
-    "Connection": "keep-alive",
-}
-
-def get_base_domain():
-    try:
-        r = requests.get(START_URL, headers=HEADERS, timeout=10)
-        return r.url.rstrip("/")
-    except:
-        return START_URL.rstrip("/")
-
-def get_channel_m3u8(channel_id, base_domain):
-    try:
-        matches_url = f"{base_domain}/matches?id={channel_id}"
-        r = requests.get(matches_url, headers=HEADERS, timeout=10)
-        if r.status_code != 200:
-            return None
-
-        fetch_match = re.search(r'fetch\(\s*[\'"]([^\'"]+)', r.text)
-        if not fetch_match:
-            return None
-
-        fetch_url = fetch_match.group(1)
-        if "{id}" in fetch_url:
-            fetch_url = fetch_url.replace("{id}", str(channel_id))
-        elif not fetch_url.endswith(str(channel_id)):
-            fetch_url = fetch_url + str(channel_id)
-
-        h = HEADERS.copy()
-        h["Referer"] = matches_url
-        h["Origin"] = base_domain
-
-        r2 = requests.get(fetch_url, headers=h, timeout=10)
-        if r2.status_code != 200:
-            return None
-
-        m3u8_match = re.search(r'(https?:\/\/[^\'"]+\.m3u8)', r2.text)
-        if m3u8_match:
-            return m3u8_match.group(1).replace("\\", "")
-
-        return None
-    except:
-        return None
-
-def generate_channels(start=1, end=200):
-    channels = []
-    for i in range(start, end + 1):
-        channels.append({
-            "id": str(i),
-            "name": f"Zeus TV {i}",
-            "group": "zeus tv"
-        })
-    return channels
+import sys
 
 def main():
-    print("🚀 zeustv173 M3U bot başlatıldı")
+    try:
+        # Domain aralığı (25–99)
+        active_domain = None
+        print("🔍 Aktif domain aranıyor...")
+        
+        for i in range(25, 1000):
+            url = f"https://birazcikspor{i}.xyz/"
+            try:
+                r = requests.head(url, timeout=5)
+                if r.status_code == 200:
+                    active_domain = url
+                    print(f"✅ Aktif domain bulundu: {active_domain}")
+                    break
+            except Exception as e:
+                continue
+        
+        if not active_domain:
+            print("⚠️  Aktif domain bulunamadı. Boş M3U dosyası oluşturuluyor...")
+            create_empty_m3u()
+            return 0
+        
+        # İlk kanal ID'si al
+        print("📡 Kanal ID'si alınıyor...")
+        try:
+            html = requests.get(active_domain, timeout=10).text
+            m = re.search(r'<iframe[^>]+id="matchPlayer"[^>]+src="event\.html\?id=([^"]+)"', html)
+            
+            if not m:
+                print("⚠️  Kanal ID bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            first_id = m.group(1)
+            print(f"✅ Kanal ID bulundu: {first_id}")
+            
+        except Exception as e:
+            print(f"⚠️  HTML alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Base URL çek
+        print("🔗 Base URL alınıyor...")
+        try:
+            event_source = requests.get(active_domain + "event.html?id=" + first_id, timeout=10).text
+            b = re.search(r'const\s+baseurls\s*=\s*\[\s*"([^"]+)"', event_source)
+            
+            if not b:
+                print("⚠️  Base URL bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            base_url = b.group(1)
+            print(f"✅ Base URL bulundu: {base_url}")
+            
+        except Exception as e:
+            print(f"⚠️  Event source alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Kanal listesi
+        channels = [
+            ("beIN Sport 1 HD","androstreamlivebiraz1","Andro TV"),
+            ("beIN Sport 2 HD","androstreamlivebs2","Andro TV"),
+            ("beIN Sport 3 HD","androstreamlivebs3","Andro TV"),
+            ("beIN Sport 4 HD","androstreamlivebs4","Andro TV"),
+            ("beIN Sport 5 HD","androstreamlivebs5","Andro TV"),
+            ("beIN Sport Max 1 HD","androstreamlivebsm1","Andro TV"),
+            ("beIN Sport Max 2 HD","androstreamlivebsm2","Andro TV"),
+            ("S Sport 1 HD","androstreamlivess1","Andro TV"),
+            ("S Sport 2 HD","androstreamlivess2","Andro TV"),
+            ("Tivibu Sport HD","androstreamlivets","Andro TV"),
+            ("Tivibu Sport 1 HD","androstreamlivets1","Andro TV"),
+            ("Tivibu Sport 2 HD","androstreamlivets2","Andro TV"),
+            ("Tivibu Sport 3 HD","androstreamlivets3","Andro TV"),
+            ("Tivibu Sport 4 HD","androstreamlivets4","Andro TV"),
+            ("Smart Sport 1 HD","androstreamlivesm1","Andro TV"),
+            ("Smart Sport 2 HD","androstreamlivesm2","Andro TV"),
+            ("Euro Sport 1 HD","androstreamlivees1","Andro TV"),
+            ("Euro Sport 2 HD","androstreamlivees2","Andro TV"),
+            ("Tabii HD","androstreamlivetb","Andro TV"),
+            ("Tabii 1 HD","androstreamlivetb1","Andro TV"),
+            ("Tabii 2 HD","androstreamlivetb2","Andro TV"),
+            ("Tabii 3 HD","androstreamlivetb3","Andro TV"),
+            ("Tabii 4 HD","androstreamlivetb4","Andro TV"),
+            ("Tabii 5 HD","androstreamlivetb5","Andro TV"),
+            ("Tabii 6 HD","androstreamlivetb6","Andro TV"),
+            ("Tabii 7 HD","androstreamlivetb7","Andro TV"),
+            ("Tabii 8 HD","androstreamlivetb8","Andro TV"),
+            ("Exxen HD","androstreamliveexn","Andro TV"),
+            ("Exxen 1 HD","androstreamliveexn1","Andro TV"),
+            ("Exxen 2 HD","androstreamliveexn2","Andro TV"),
+            ("Exxen 3 HD","androstreamliveexn3","Andro TV"),
+            ("Exxen 4 HD","androstreamliveexn4","Andro TV"),
+            ("Exxen 5 HD","androstreamliveexn5","Andro TV"),
+            ("Exxen 6 HD","androstreamliveexn6","Andro TV"),
+            ("Exxen 7 HD","androstreamliveexn7","Andro TV"),
+            ("Exxen 8 HD","androstreamliveexn8","Andro TV"),
+        ]
+        
+        # M3U dosyası oluştur
+        print("📝 M3U dosyası oluşturuluyor...")
+        lines = [""]
+        for name, cid, title in channels:
+            lines.append(f'#EXTINF:-1 tvg-id="sport.tr" tvg-name="TR:{name}" group-title="{title}" ,{name}')
+            full_url = f"{base_url}{cid}.m3u8"
+            lines.append(full_url)
+        
+        with open("an.m3u", "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        
+        print(f"✅ an.m3u başarıyla oluşturuldu ({len(channels)} kanal)")
+        return 0
+        
+    except Exception as e:
+        print(f"❌ Beklenmeyen hata: {str(e)}")
+        print("⚠️  Boş M3U dosyası oluşturuluyor...")
+        create_empty_m3u()
+        return 0
 
-    base_domain = get_base_domain()
-    channels = generate_channels(1, 200)
-    working = []
+def create_empty_m3u():
+    """Hata durumunda boş/placeholder M3U dosyası oluştur"""
+    try:
+        with open("an.m3u", "w", encoding="utf-8") as f:
+            f.write("#EXTM3U\n")
+            f.write("# Kanal listesi şu anda kullanılamıyor\n")
+        print("✅ Placeholder M3U dosyası oluşturuldu")
+    except Exception as e:
+        print(f"❌ M3U dosyası oluşturulamadı: {str(e)}")
 
-    for i, ch in enumerate(channels, 1):
-        print(f"{i:03d} | {ch['name']} kontrol ediliyor...", end=" ")
-        url = get_channel_m3u8(ch["id"], base_domain)
-        if url:
-            print("✓")
-            ch["url"] = url
-            working.append(ch)
-        else:
-            print("✗")
-        time.sleep(0.3)
-
-    if not working:
-        print("❌ Hiç çalışan kanal bulunamadı")
-        return
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n")
-        for ch in working:
-            f.write(
-                f'#EXTINF:-1 tvg-id="{ch["id"]}" '
-                f'tvg-name="{ch["name"]}" '
-                f'group-title="{ch["group"]}",{ch["name"]}\n'
-            )
-            f.write(f'#EXTVLCOPT:http-referrer={base_domain}\n')
-            f.write(f'#EXTVLCOPT:http-user-agent={HEADERS["User-Agent"]}\n')
-            f.write(ch["url"] + "\n")
-
-    print(f"\n✅ {OUTPUT_FILE} oluşturuldu ({len(working)} kanal)")
-
-if _name_ == "_main_":
-    main()
+if __name__ == "__main__":
+    exit_code = main()
+    sys.exit(exit_code)
