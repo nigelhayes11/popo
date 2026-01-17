@@ -63,9 +63,6 @@ jobs:
       - name: tvpass.py Çalıştır
         continue-on-error: true
         run: python tvpass.py 
-      - name: pxs.py Çalıştır
-        continue-on-error: true
-        run: python pxs.py
       - name: zeus.py Çalıştır
         continue-on-error: true
         run: python zeus.py
