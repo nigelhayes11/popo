@@ -184,7 +184,7 @@ def main():
     print("\n" + "=" * 60)
     print("GitHub komutları:")
     print(f"  git add {OUTPUT_FILE}")
-    print('  git commit -m "AtomSporTV M3U güncellemesi"')
+    print('  git commit -m "zeus M3U güncellemesi"')
     print("  git push")
 
 if __name__ == "__main__":
