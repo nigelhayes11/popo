@@ -1,12 +1,12 @@
 import requests
 import sys
 
-# Domain aralığı (güncel jestyayin numaraları)
-DOMAIN_START = 947
-DOMAIN_END = 2000
+# Aralık: 949'dan başlayıp denenecek
+DOMAIN_START = 949
+DOMAIN_END = 1500
 
-# Sabit kanal listesi (sadece m3u8 son path’leri)
-CHANNELS = {
+# Kanal listesi: {m3u8 sonu: [Kanal adı, Grup]}
+channel_ids = {
     "yayinzirve": ["beIN Sports 1 A", "JEST TV"],
     "yayininat":  ["beIN Sports 1 B", "JEST TV"],
     "yayin1":     ["beIN Sports 1 C", "JEST TV"],
@@ -39,42 +39,39 @@ CHANNELS = {
 OUTPUT_FILE = "jst.m3u"
 
 def find_active_domain():
-    print("🔍 Aktif domain aranıyor...")
     for i in range(DOMAIN_START, DOMAIN_END):
-        url = f"https://jestyayin{i}.com/"
+        domain = f"https://jestyayin{i}.com/"
         try:
-            r = requests.head(url, timeout=5)
+            r = requests.head(domain, timeout=5)
             if r.status_code == 200:
-                print(f"✅ Aktif domain bulundu: {url}")
-                return url
+                print(f"✅ Aktif domain bulundu: {domain}")
+                return domain
         except:
             continue
-    print("⚠️ Aktif domain bulunamadı")
+    print("⚠️  Aktif domain bulunamadı")
     return None
 
-def create_m3u(active_domain):
+def create_m3u(domain):
     lines = ["#EXTM3U"]
-    for path, info in CHANNELS.items():
-        name = info[0]
-        group = info[1]
+    for cid, details in channel_ids.items():
+        name, group = details
         lines.append(f'#EXTINF:-1 group-title="{group}",{name}')
-        # VLC ve diğer IPTV uygulamaları için user-agent ve referrer
-        lines.append(f'#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)')
-        lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
-        lines.append(f'{active_domain}{path}.m3u8')
-
+        lines.append(f'{domain}{cid}.m3u8')
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
-    print(f"✔ {OUTPUT_FILE} başarıyla oluşturuldu ({len(CHANNELS)} kanal)")
+    print(f"✅ {OUTPUT_FILE} başarıyla oluşturuldu ({len(channel_ids)} kanal)")
+
+def create_empty_m3u():
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write("#EXTM3U\n# Kanal listesi şu anda kullanılamıyor")
+    print(f"✅ Placeholder {OUTPUT_FILE} oluşturuldu")
 
 def main():
     domain = find_active_domain()
     if domain:
         create_m3u(domain)
     else:
-        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-            f.write("#EXTM3U\n# Kanal listesi şu anda kullanılamıyor\n")
-        print("⚠️ Boş M3U oluşturuldu")
+        create_empty_m3u()
 
 if __name__ == "__main__":
     sys.exit(main())
