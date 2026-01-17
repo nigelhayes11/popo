@@ -66,7 +66,9 @@ jobs:
       - name: pxs.py Çalıştır
         continue-on-error: true
         run: python pxs.py
-        
+      - name: zeus.py Çalıştır
+        continue-on-error: true
+        run: python zeus.py
 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
