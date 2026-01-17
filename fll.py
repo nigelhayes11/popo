@@ -11,6 +11,7 @@ rnl = 'rnl.m3u'
 rx = 'rx.m3u'
 TVPass = 'TVPass.m3u'
 osi = 'osi.m3u'
+jest = 'jst.m3u'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
@@ -30,10 +31,10 @@ ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
 rx_icerik = oku_m3u(rx)
 TVPass_icerik = oku_m3u(tvpass)
-
-
+osi_icerik = oku_m3u(osi)
+jst_icerik = oku_m3u(jst)
 # Birleştir
-birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + rx_icerik + TVPass_icerik + osi_icerik 
+birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + TVPass_icerik + osi_icerik + rx_icerik + jst_icerik 
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
