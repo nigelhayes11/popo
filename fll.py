@@ -9,7 +9,7 @@ kbl = 'kbl.m3u'
 ne = 'ne.m3u'
 rnl = 'rnl.m3u'
 rx = 'rx.m3u'
-tvpass = 'TVPass.m3u'
+TVPass = 'TVPass.m3u'
 osi = 'osi.m3u'
 cikis_dosyasi = 'man26.m3u'
 
