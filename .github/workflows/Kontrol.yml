@@ -63,9 +63,9 @@ jobs:
       - name: tvpass.py Çalıştır
         continue-on-error: true
         run: python tvpass.py 
-      - name: zeus.py Çalıştır
+      - name: mj.py Çalıştır
         continue-on-error: true
-        run: python zeus.py
+        run: python mj.py
 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
