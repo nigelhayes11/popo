@@ -2,7 +2,7 @@ import requests
 import re
 import time
 
-# AtomSporTV
+# zeus
 START_URL = "https://zeustv173.com/"
 OUTPUT_FILE = "zeus.m3u"
 
