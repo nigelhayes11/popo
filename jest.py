@@ -124,7 +124,7 @@ def main():
 def create_empty_m3u():
     """Hata durumunda boş/placeholder M3U dosyası oluştur"""
     try:
-        with open("inn.m3u", "w", encoding="utf-8") as f:
+        with open("jst.m3u", "w", encoding="utf-8") as f:
             f.write("#EXTM3U\n")
             f.write("# Kanal listesi şu anda kullanılamıyor\n")
         print("✅ Placeholder M3U dosyası oluşturuldu")
