@@ -9,7 +9,7 @@ kbl = 'kbl.m3u'
 ne = 'ne.m3u'
 rnl = 'rnl.m3u'
 rx = 'rx.m3u'
-TVPass = 'TVPass.m3u'
+tvpass = 'tvpass.m3u'
 osi = 'osi.m3u'
 liveeventsfilter = 'liveeventsfilter.m3u'
 cikis_dosyasi = 'man26.m3u'
@@ -30,11 +30,11 @@ kbl_icerik = oku_m3u(kbl)
 ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
 rx_icerik = oku_m3u(rx)
-TVPass_icerik = oku_m3u(tvpass)
+tvpass_icerik = oku_m3u(tvpass)
 osi_icerik = oku_m3u(osi)
 liveeventsfilter_icerik = oku_m3u(liveeventsfilter)
 # Birleştir
-birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + TVPass_icerik + osi_icerik + rx_icerik + liveeventsfilter_icerik 
+birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + tvpass_icerik + osi_icerik + rx_icerik + liveeventsfilter_icerik 
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
