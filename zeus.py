@@ -118,7 +118,7 @@ def get_all_possible_channels():
         channels.append({
             'id': channel_id,
             'name': name,
-            'group': 'TV Kanalları'
+            'group': 'zeus spor'
         })
     
     print(f"Toplam {len(channels)} TV kanal ID'si oluşturuldu")
@@ -161,7 +161,7 @@ def create_m3u(working_channels, base_domain):
             m3u8_url = channel["url"]
             
             # EXTINF satırı
-            f.write(f'#EXTINF:-1 tvg-id="{channel_id}" tvg-name="{channel_name}" group-title="RONALDO TV",{channel_name}\n')
+            f.write(f'#EXTINF:-1 tvg-id="{channel_id}" tvg-name="{channel_name}" group-title="zeus tv",{channel_name}\n')
             
             # VLC seçenekleri
             f.write(f'#EXTVLCOPT:http-referrer={base_domain}\n')
@@ -174,7 +174,7 @@ def create_m3u(working_channels, base_domain):
     print(f"Toplam {len(working_channels)} çalışan kanal eklendi.")
 
 def main():
-    print(f"{GREEN}AtomSporTV M3U Oluşturucu{RESET}")
+    print(f"{GREEN}zeus tv M3U Oluşturucu{RESET}")
     print("=" * 60)
     
     # 1. Ana domain'i bul
