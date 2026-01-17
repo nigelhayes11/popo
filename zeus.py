@@ -1,5 +1,3 @@
-import requests
-
 BASE = "https://zeus173.com/live/"
 OUTPUT = "zeus.m3u"
 
@@ -7,7 +5,9 @@ KNOWN_M3U8 = {
     "bein-sports-1.m3u8": "beIN Sports 1",
     "bein-sports-2.m3u8": "beIN Sports 2",
     "bein-sports-3.m3u8": "beIN Sports 3",
+    "bein-sports-4.m3u8": "beIN Sports 4",
     "s-sport.m3u8": "S Sport",
+    "s-sport-2.m3u8": "S Sport 2",
 }
 
 def main():
@@ -16,8 +16,6 @@ def main():
 
     for fname, name in KNOWN_M3U8.items():
         url = BASE + fname
-
-        # ⚠️ Zeus için test YOK
         lines.append(f'#EXTINF:-1 group-title="Zeus",{name}')
         lines.append(url)
         found += 1
