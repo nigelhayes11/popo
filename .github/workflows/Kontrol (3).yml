@@ -60,10 +60,10 @@ jobs:
       - name: rx.py Çalıştır
         continue-on-error: true
         run: python rx.py 
-        - name: tvpass.py Çalıştır
+      - name: tvpass.py Çalıştır
         continue-on-error: true
         run: python tvpass.py 
-        - name: pxs.py Çalıştır
+      - name: pxs.py Çalıştır
         continue-on-error: true
         run: python pxs.py
         
