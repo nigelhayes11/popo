@@ -63,7 +63,6 @@ jobs:
       - name: tvpass.py Çalıştır
         continue-on-error: true
         run: python tvpass.py 
-      
       - name: osi.py Çalıştır
         continue-on-error: true
         run: python osi.py
