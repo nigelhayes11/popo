@@ -32,7 +32,7 @@ def get_base_domain():
                 print(f"Ana Domain: {base_domain}")
                 return base_domain
         
-        return "https://www.atomsportv480.top"
+        return "https://zeustv173.com"
         
     except Exception as e:
         print(f"Domain hatası: {e}")
@@ -88,31 +88,7 @@ def get_all_possible_channels():
     
     channels = []
     
-    # SADECE TV KANALLARI
-    tv_channels = [
-        # BEIN SPORTS
-        ("bein-sports-1", "BEIN SPORTS 1"),
-        ("bein-sports-2", "BEIN SPORTS 2"),
-        ("bein-sports-3", "BEIN SPORTS 3"),
-        ("bein-sports-4", "BEIN SPORTS 4"),
-        
-        # S SPORT
-        ("s-sport", "S SPORT"),
-        ("s-sport-2", "S SPORT 2"),
-        
-        # TİVİBU SPOR
-        ("tivibu-spor-1", "TİVİBU SPOR 1"),
-        ("tivibu-spor-2", "TİVİBU SPOR 2"),
-        ("tivibu-spor-3", "TİVİBU SPOR 3"),
-        
-        # TRT
-        ("trt-spor", "TRT SPOR"),
-        ("trt-yildiz", "TRT YILDIZ"),
-        ("trt1", "TRT 1"),
-        
-        # DİĞER
-        ("aspor", "ASPOR"),
-    ]
+    
     
     for channel_id, name in tv_channels:
         channels.append({
