@@ -69,9 +69,9 @@ jobs:
       - name: osi.py Çalıştır
         continue-on-error: true
         run: python osi.py
-      - name: fetch.py Çalıştır
+      - name: jest.py Çalıştır
         continue-on-error: true
-        run: python fetch.py
+        run: python jest.py
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
