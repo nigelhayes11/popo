@@ -1,7 +1,14 @@
 import requests
 import re
 import sys
-
+KNOWN_CHANNELS = {
+    1: "beIN Sports 1",
+    2: "S Sport",
+    3: "Spor Smart",
+    4: "Tivibu Spor 1",
+    5: "tabii Spor 1",
+    6: "TRT Spor",
+}
 def main():
     try:
         print("🔍 Aktif Zeus domain aranıyor...")
