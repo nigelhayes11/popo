@@ -1,195 +1,147 @@
-#!/usr/bin/env python3
-import asyncio
-import gzip
+import requests
 import re
-from pathlib import Path
-from xml.etree import ElementTree as ET
+import sys
 
-import httpx
-
-epg_file = Path(__file__).parent / "TV.xml"
-
-epg_urls = [
-    "https://epgshare01.online/epgshare01/epg_ripper_CA2.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_DUMMY_CHANNELS.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_FANDUEL1.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_MY1.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_PLEX1.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_UK1.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_US2.xml.gz",
-    "https://epgshare01.online/epgshare01/epg_ripper_US_LOCALS1.xml.gz",
-    "https://i.mjh.nz/Roku/all.xml.gz",
-]
-
-client = httpx.AsyncClient(
-    timeout=httpx.Timeout(5.0),
-    follow_redirects=True,
-    http2=True,
-    headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
-    },
-)
-
-live_img = "https://i.gyazo.com/978f2eb4a199ca5b56b447aded0cb9e3.png"
-
-dummies = {
-    "Basketball.Dummy.us": live_img,
-    "Golf.Dummy.us": live_img,
-    "Live.Event.us": live_img,
-    "MLB.Baseball.Dummy.us": None,
-    "NBA.Basketball.Dummy.us": None,
-    "NFL.Dummy.us": None,
-    "NHL.Hockey.Dummy.us": None,
-    "PPV.EVENTS.Dummy.us": live_img,
-    "Racing.Dummy.us": live_img,
-    "Soccer.Dummy.us": live_img,
-    "Tennis.Dummy.us": live_img,
-    "WNBA.dummy.us": None,
-}
-
-replace_ids = {
-    "NCAA Sports": {"old": "Sports.Dummy.us", "new": "NCAA.Sports.Dummy.us"},
-    "UFC": {"old": "UFC.247.Dummy.us", "new": "UFC.Dummy.us"},
-}
-
-
-def get_tvg_ids() -> dict[str, str]:
-    base_m3u8 = (
-        (Path(__file__).parent.parent / "M3U8" / "base.m3u8")
-        .read_text(encoding="utf-8")
-        .splitlines()
-    )
-
-    tvg = {}
-
-    for line in base_m3u8:
-        if line.startswith("#EXTINF"):
-            tvg_id = re.search(r'tvg-id="([^"]*)"', line)[1]
-            tvg_logo = re.search(r'tvg-logo="([^"]*)"', line)[1]
-
-            tvg[tvg_id] = tvg_logo
-
-    return tvg
-
-
-async def fetch_xml(url: str) -> ET.Element | None:
+def main():
     try:
-        r = await client.get(url)
-        r.raise_for_status()
-    except Exception as e:
-        print(f'Failed to fetch "{url}": {e}')
-        return
-
-    try:
-        decompressed_data = gzip.decompress(r.content)
-
-        return ET.fromstring(decompressed_data)
-
-    except Exception as e:
-        print(f'Failed to decompress and parse XML from "{url}": {e}')
-
-
-def hijack_id(
-    old: str,
-    new: str,
-    text: str,
-    root: ET.Element,
-) -> None:
-
-    og_channel = root.find(f"./channel[@id='{old}']")
-
-    if og_channel is not None:
-        new_channel = ET.Element(og_channel.tag, {**og_channel.attrib, "id": new})
-
-        display_name = og_channel.find("display-name")
-
-        if display_name is not None:
-            new_channel.append(ET.Element("display-name", display_name.attrib))
-            new_channel[-1].text = text
-
-        for child in og_channel:
-            if child.tag == "display-name":
+        # Domain aralığı (25–99)
+        active_domain = None
+        print("🔍 Aktif domain aranıyor...")
+        
+        for i in range(1204, 2000):
+            url = f"https://jestyayın{i}.com/"
+            try:
+                r = requests.head(url, timeout=5)
+                if r.status_code == 200:
+                    active_domain = url
+                    print(f"✅ Aktif domain bulundu: {active_domain}")
+                    break
+            except Exception as e:
                 continue
+        
+        if not active_domain:
+            print("⚠️  Aktif domain bulunamadı. Boş M3U dosyası oluşturuluyor...")
+            create_empty_m3u()
+            return 0
+        
+        # İlk kanal ID'si al
+        print("📡 Kanal ID'si alınıyor...")
+        try:
+            html = requests.get(active_domain, timeout=10).text
+            m = re.search(r'<iframe[^>]+id="customIframe"[^>]+src="/channel.html\?id=([^"]+)"', html)
+            
+            if not m:
+                print("⚠️  Kanal ID bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            first_id = m.group(1)
+            print(f"✅ Kanal ID bulundu: {first_id}")
+            
+        except Exception as e:
+            print(f"⚠️  HTML alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Base URL çek
+        print("🔗 Base URL alınıyor...")
+        try:
+            event_source = requests.get(active_domain + "channel.html?id=" + first_id, timeout=10).text
+            b = re.search(r'B_URL\s*=\s*["\']([^"\']+)["\']', event_source)
+            
+            if not b:
+                print("⚠️  Base URL bulunamadı. Boş M3U dosyası oluşturuluyor...")
+                create_empty_m3u()
+                return 0
+            
+            base_url = b.group(1)
+            print(f"✅ Base URL bulundu: {base_url}")
+            
+        except Exception as e:
+            print(f"⚠️  Event source alınırken hata: {str(e)}")
+            create_empty_m3u()
+            return 0
+        
+        # Kanal listesi
+        channel_ids = {
+            "yayinzirve": ["beIN Sports 1 A", "JEST TV"],
+            "yayininat":  ["beIN Sports 1 B", "JEST TV"],
+            "yayin1":     ["beIN Sports 1 C️", "JEST TV"],
+            "yayinb2":    ["beIN Sports 2", "JEST TV"],
+            "yayinb3":    ["beIN Sports 3", "JEST TV"],
+            "yayinb4":    ["beIN Sports 4", "JEST TV"],
+            "yayinb5":    ["beIN Sports 5", "JEST TV"],
+            "yayinbm1":   ["beIN Sports 1 Max", "JEST TV"],
+            "yayinbm2":   ["beIN Sports 2 Max", "JEST TV"],
+            "yayinss":    ["S Sports 1", "JEST TV"],
+            "yayinss2":   ["S Sports 2", "JEST TV"],
+            "yayint1":    ["Tivibu Sports 1", "JEST TV"],
+            "yayint2":    ["Tivibu Sports 2", "JEST TV"],
+            "yayint3":    ["Tivibu Sports 3", "JEST TV"],
+            "yayint4":    ["Tivibu Sports 4", "JEST TV"],
+            "yayinsmarts":["Smart Sports", "JEST TV"],
+            "yayinsms2":  ["Smart Sports 2", "JEST TV"],
+            "yayineu1":  ["Euro Sport 1", "JEST TV"],
+            "yayineu2":  ["Euro Sport 2", "JEST TV"],
+            "yayinex1":   ["Tâbii 1", "JEST TV"],
+            "yayinex2":   ["Tâbii 2", "JEST TV"],
+            "yayinex3":   ["Tâbii 3", "JEST TV"],
+            "yayinex4":   ["Tâbii 4", "JEST TV"],
+            "yayinex5":   ["Tâbii 5", "JEST TV"],
+            "yayinex6":   ["Tâbii 6", "JEST TV"],
+            "yayinex7":   ["Tâbii 7", "JEST TV"],
+            "yayinex8":   ["Tâbii 8", "JEST TV"]
+        }
+        
+        # M3U dosyası oluştur
+        print("📝 M3U dosyası oluşturuluyor...")
+        lines = ["\n"]
+        for cid, details in channel_ids.items():
+            name = details[0]  # Listenin ilk elemanı: Kanal Adı (Örn: beIN Sports 1 A)
+            title = details[1] # Listenin ikinci elemanı: Grup (Örn: JEST TV)
+            
+            # EXTM3U satırını oluştur
+            lines.append(f'#EXTINF:-1 group-title="JEST TV" ,{name}')
+            lines.append(f'#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)')
+            lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
+            
+            # URL satırını oluştur (Sözlük anahtarı olan 'cid' kullanılıyor)
+            full_url = f"{base_url}{cid}.m3u8"
+            lines.append(full_url)
+        
+        with open("jst.m3u", "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        
+        print(f"✅ jst.m3u başarıyla oluşturuldu ({len(channel_ids)} kanal)")
+        return 0
+        
+    except Exception as e:
+        print(f"❌ Beklenmeyen hata: {str(e)}")
+        print("⚠️  Boş M3U dosyası oluşturuluyor...")
+        create_empty_m3u()
+        return 0
 
-            new_child = ET.Element(child.tag, child.attrib)
-            new_child.text = child.text
-
-        root.remove(og_channel)
-
-        root.append(new_channel)
-
-    for program in root.findall(f"./programme[@channel='{old}']"):
-        new_program = ET.Element(program.tag, {**program.attrib, "channel": new})
-
-        for child in program:
-            new_child = ET.Element(child.tag, child.attrib)
-            new_child.text = child.text
-            new_program.append(new_child)
-
-        for tag_name in ["title", "desc", "sub-title"]:
-            tag = new_program.find(tag_name)
-
-            if tag is not None:
-                tag.text = text
-
-        root.remove(program)
-
-        root.append(new_program)
-
-
-async def main() -> None:
-    tvg_ids = get_tvg_ids()
-
-    tvg_ids |= dummies | {v["old"]: live_img for v in replace_ids.values()}
-
-    root = ET.Element("tv")
-
-    tasks = [fetch_xml(url) for url in epg_urls]
-
-    results = await asyncio.gather(*tasks)
-
-    for epg_data in results:
-        if epg_data is None:
-            continue
-
-        for channel in epg_data.findall("channel"):
-            if (channel_id := channel.get("id")) in tvg_ids:
-                for icon_tag in channel.findall("icon"):
-                    if logo := tvg_ids.get(channel_id):
-                        icon_tag.set("src", logo)
-
-                if (url_tag := channel.find("url")) is not None:
-                    channel.remove(url_tag)
-
-                root.append(channel)
-
-        for program in epg_data.findall("programme"):
-            if program.get("channel") in tvg_ids:
-                title_text = program.find("title").text
-                subtitle = program.find("sub-title")
-
-                if (
-                    title_text in ["NHL Hockey", "Live: NFL Football"]
-                    and subtitle is not None
-                ):
-                    program.find("title").text = f"{title_text} {subtitle.text}"
-
-                root.append(program)
-
-        for k, v in replace_ids.items():
-            hijack_id(**v, text=k, root=root)
-
-    tree = ET.ElementTree(root)
-
-    tree.write(epg_file, encoding="utf-8", xml_declaration=True)
-
-    print(f"EPG saved to {epg_file.resolve()}")
-
+def create_empty_m3u():
+    """Hata durumunda boş/placeholder M3U dosyası oluştur"""
+    try:
+        with open("inn.m3u", "w", encoding="utf-8") as f:
+            f.write("#EXTM3U\n")
+            f.write("# Kanal listesi şu anda kullanılamıyor\n")
+        print("✅ Placeholder M3U dosyası oluşturuldu")
+    except Exception as e:
+        print(f"❌ M3U dosyası oluşturulamadı: {str(e)}")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    exit_code = main()
+    sys.exit(exit_code)
 
-    try:
-        asyncio.run(client.aclose())
-    except Exception:
-        pass
+
+
+
+
+
+
+
+
+
+
