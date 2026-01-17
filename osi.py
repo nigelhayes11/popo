@@ -1,6 +1,7 @@
 import requests
+import re
 
-# Kanal listesi: (path, isim)
+# Sabit path listesi ve kanal isimleri
 CHANNELS = [
     ("/beinspor_1_tr/main.m3u8", "beIN Sports 1"),
     ("/beinspor_2_tr/main.m3u8", "beIN Sports 2"),
@@ -9,11 +10,12 @@ CHANNELS = [
     ("/beinspor_5_tr/main.m3u8", "beIN Sports 5"),
 ]
 
-# Ön domain listesi: değişebileceğini düşündüğün domainleri ekle
+# Tahmini domain listesi (güncel domain bu listeden bulunacak)
 POSSIBLE_DOMAINS = [
     "https://cdcom.cfd",
     "https://cdcdn.cfd",
-    "https://cdcom2.cfd",
+    "https://cdn123.cfd",
+    # gerekirse yeni domain ekle
 ]
 
 OUTPUT_FILE = "osi.m3u"
@@ -22,42 +24,34 @@ HEADERS = {
     "Accept": "*/*"
 }
 
-def find_base_domain():
-    """Çalışan domaini bul"""
+def find_working_domain(channel_path):
+    """Domain değişse bile çalışan domaini bul"""
     for domain in POSSIBLE_DOMAINS:
-        for path, _ in CHANNELS:
-            url = domain + path
-            try:
-                r = requests.head(url, headers=HEADERS, timeout=5)
-                if r.status_code == 200:
-                    print(f"🔗 Güncel domain bulundu: {domain}")
-                    return domain
-            except:
-                continue
-    print("⚠️ Hiçbir domain çalışmadı, ilk domain kullanılacak")
-    return POSSIBLE_DOMAINS[0]
+        url = domain + channel_path
+        try:
+            r = requests.get(url, headers=HEADERS, stream=True, timeout=5)
+            if r.status_code == 200:
+                return domain
+        except:
+            continue
+    return None
 
 def main():
-    base_domain = find_base_domain()
     lines = ["#EXTM3U"]
     found_count = 0
 
     for path, name in CHANNELS:
-        full_url = base_domain + path
-        try:
-            r = requests.head(full_url, headers=HEADERS, timeout=5)
-            if r.status_code == 200:
-                lines.append(f'#EXTINF:-1 group-title="piko",{name}')
-                lines.append(full_url)
-                found_count += 1
-                print(f"✔ Kanal bulundu: {name}")
-            else:
-                print(f"⚠️ Kanal yok: {name}")
-        except Exception as e:
-            print(f"⚠️ Hata: {name} -> {e}")
-
-    if found_count == 0:
-        lines.append("# Hiç kanal bulunamadı")
+        domain = find_working_domain(path)
+        if domain:
+            full_url = domain + path
+            lines.append(f'#EXTINF:-1 group-title="PİKO",{name}')
+            lines.append(full_url)
+            found_count += 1
+            print(f"✔ Kanal bulundu: {name} -> {full_url}")
+        else:
+            lines.append(f'#EXTINF:-1 group-title="Sports",{name} (kanal yok)')
+            lines.append("# Kanal bulunamadı")
+            print(f"⚠️ Kanal yok: {name}")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
