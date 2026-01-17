@@ -8,7 +8,7 @@ def main():
         active_domain = None
         print("🔍 Aktif domain aranıyor...")
         
-        for i in range(1204, 2000):
+        for i in range(900, 1500):
             url = f"https://jestyayın{i}.com/"
             try:
                 r = requests.head(url, timeout=5)
