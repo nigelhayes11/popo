@@ -1,0 +1,11 @@
+#EXTM3U
+#EXTINF:-1 group-title="Sports",beIN Sports 1
+http://www.w3.org/1999/beinspor_1_tr/main.m3u8
+#EXTINF:-1 group-title="Sports",beIN Sports 2
+http://www.w3.org/1999/beinspor_2_tr/main.m3u8
+#EXTINF:-1 group-title="Sports",beIN Sports 3
+http://www.w3.org/1999/beinspor_3_tr/main.m3u8
+#EXTINF:-1 group-title="Sports",beIN Sports 4
+http://www.w3.org/1999/beinspor_4_tr/main.m3u8
+#EXTINF:-1 group-title="Sports",beIN Sports 5
+http://www.w3.org/1999/beinspor_5_tr/main.m3u8
