@@ -30,7 +30,7 @@ ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
 rx_icerik = oku_m3u(rx)
 TVPass_icerik = oku_m3u(tvpass)
-mj_icerik = oku_m3u(mj)
+
 
 # Birleştir
 birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + rx_icerik + TVPass_icerik + osi_icerik 
