@@ -28,7 +28,8 @@ jobs:
 
       - name: 🎯 Run live events filter
         run: |
-          python3 liveeventsfilter.py  liveeventsfilter.m3u8
+          python3 liveeventsfilter.py liveeventsfilter.m3u8 temp_liveevents.m3u8
+          mv temp_liveevents.m3u8 liveeventsfilter.m3u8
 
       - name: 💾 Commit & Push if changed
         run: |
