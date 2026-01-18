@@ -1,10 +1,5 @@
 #EXTM3U
-#EXTINF:-1  tvg-name="Sky Sport Bundesliga DE" tvg-id="skyde/skysportbundesliga" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/germany/sky-sport/sky-sport-bundesliga-de.png?raw=true" group-title="NZM STREAM",Sky Sport Bundesliga DE
-https://ott.udptv.xyz/stream/skyde/skysport6/master.m3u8?u=cocked&p=dd0abb52723d22acc0f97fe0336480feaa88a37ecda55a138a8d5e0ee14b0664
-#EXTINF:-1  tvg-name="Sky Sport Bundesliga 1 DE" tvg-id="skyde/skysportbundesliga1" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/germany/sky-sport/sky-sport-bundesliga-1-de.png?raw=true" group-title="NZM STREAM",Sky Sport Bundesliga 1 DE
-https://ott.udptv.xyz/stream/skyde/skysport7/master.m3u8?u=cocked&p=dd0abb52723d22acc0f97fe0336480feaa88a37ecda55a138a8d5e0ee14b0664
-#EXTINF:-1  tvg-name="Sky Sport Bundesliga 2 DE" tvg-id="skyde/skysportbundesliga2" tvg-logo="https://github.com/tv-logo/tv-logos/blob/main/countries/germany/sky-sport/sky-sport-bundesliga-2-de.png?raw=true" group-title="NZM STREAM",Sky Sport Bundesliga 2 DE
-https://ott.udptv.xyz/stream/skyde/skysport8/master.m3u8?u=cocked&p=dd0abb52723d22acc0f97fe0336480feaa88a37ecda55a138a8d5e0ee14b0664
+
 #EXTINF:-1 tvg-id="1" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/22c5fe05-d70b-4c68-98fb-03bae4870e81.png" group-title="Sinema ve Dizi",Sinema Tv
 https://ottcdn.kablowebtv.net/live_turksat_sub3/sinematv_stream/index.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MS8xOC8yMDI2IDExOjU0OjI0IEFNJmhhc2hfdmFsdWU9dEYxUFZzdXZ6S3gxdEZmTHRNcFBzQT09JnZhbGlkbWludXRlcz0yODgwJmlkPTA5M2Q3MjBhLTUwMmMtNDFlZC1hODBmLTJiODE2OTg0ZmI5NSxlYjg3NzQ0Yy05ODQyLTQ1MDctOWIwYS00NDdkZmI4NjYyYWQsYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjLDBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCwwLDo6ZmZmZjoxMC4wLjAuMg==
 #EXTINF:-1 tvg-id="2" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/500/500/channels/logos/bd434731-0e47-4a37-997e-49f71340fcc6.png" group-title="Sinema ve Dizi",Sinema Aksiyon
