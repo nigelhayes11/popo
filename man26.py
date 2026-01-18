@@ -15,7 +15,7 @@ ne = 'ne.m3u'
 rnl = 'rnl.m3u'
 liveeventsfilter = 'liveeventsfilter.m3u8'
 manual_additions = 'a.m3u8'  # Manuel eklenen dosya (opsiyonel)
-cikis_dosyasi = 'man26.m3u8'
+cikis_dosyasi = 'man26.m3u'
 
 # M3U / M3U8 dosyalarını oku (TEK FONKSİYON)
 def oku_m3u(dosya_adi):
