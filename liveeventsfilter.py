@@ -83,7 +83,7 @@ def filter_m3u_playlist(input_path: str, output_path: str):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python filter_m3u_playlist.py input.m3u output.m3u")
+        print("Usage: python filter liveeventsfilter.py input.m3u output.m3u")
         sys.exit(1)
 
     input_m3u = sys.argv[1]
