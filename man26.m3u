@@ -1,9 +1,5 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="Soccer.Dummy.us" tvg-name="Kasmpaa vs Antalyaspor" tvg-logo="https://streami.su/api/images/badge/GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpgAmYXlXm8wIbiBUgYu-SZQgIIRCoIUmfFFzBl4ReaIdNaYJ2NEQgA.webp" group-title="Streamed",Kasmpaa vs Antalyaspor
-#EXTVLCOPT:http-origin=https://embedsports.top
-#EXTVLCOPT:http-referrer=https://embedsports.top/
-#EXTVLCOPT:user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
-https://lb1.strmd.top/secure/XRpGIVQQFCJbiCcEQWBJjdmGxStVeNIa/echo/stream/kasimpasa-vs-antalyaspor-football-1394592/1/playlist.m3u8
+
 
 #EXTINF:-1 tvg-id="1" tvg-logo="https://feo.kablowebtv.com/resize/168A635D265A4328C2883FB4CD8FF/0/0/Vod/HLS/22c5fe05-d70b-4c68-98fb-03bae4870e81.png" group-title="Sinema ve Dizi",Sinema Tv
 https://ottcdn.kablowebtv.net/live_turksat_sub3/sinematv_stream/index.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MS8xOC8yMDI2IDExOjU0OjI0IEFNJmhhc2hfdmFsdWU9dEYxUFZzdXZ6S3gxdEZmTHRNcFBzQT09JnZhbGlkbWludXRlcz0yODgwJmlkPTA5M2Q3MjBhLTUwMmMtNDFlZC1hODBmLTJiODE2OTg0ZmI5NSxlYjg3NzQ0Yy05ODQyLTQ1MDctOWIwYS00NDdkZmI4NjYyYWQsYTA5MDg3ODQtZDEyOC00NjFmLWI3NmItYTU3ZGViMWI4MGNjLDBmYTAzNTlkLWExOWItNDFiMi05ZTczLTI5ZWNiNjk2OTY0MCwwLDo6ZmZmZjoxMC4wLjAuMg==
