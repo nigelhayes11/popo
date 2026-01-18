@@ -1,8 +1,8 @@
-name: 🚀 Update Live Events Playlist 📺
+name: 🚀 Update Live Events Playlist
 
 on:
   schedule:
-    - cron: '*/10 * * * *'   # ⏰ Every 10 minutes (UTC)
+    - cron: '*/10 * * * *'   # 10 dakikada bir
   workflow_dispatch:
 
 permissions:
@@ -13,25 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python 3.11
+      - name: 🐍 Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: 📦 Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install requests
+      - name: 📦 Install deps
+        run: pip install requests
 
-      - name: 🎯 Run live events filter
-        run: |
-          python3 liveeventsfilter.py liveeventsfilter.m3u8 temp_liveevents.m3u8
-          mv temp_liveevents.m3u8 liveeventsfilter.m3u8
+      - name: ▶️ Run filter
+        run: python3 liveeventsfilter.py
 
-      - name: 💾 Commit & Push if changed
+      - name: 💾 Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
@@ -39,9 +35,9 @@ jobs:
           git add liveeventsfilter.m3u8
 
           if git diff --cached --quiet; then
-            echo "✅ No changes detected"
+            echo "No changes"
             exit 0
           fi
 
-          git commit -m "🔁 Update liveeventsfilter.m3u8 ($(date -u))"
+          git commit -m "Update liveeventsfilter.m3u8"
           git push
