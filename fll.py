@@ -8,7 +8,7 @@ an = 'an.m3u'
 kbl = 'kbl.m3u'
 ne = 'ne.m3u'
 rnl = 'rnl.m3u'
-liveeventsfilter = 'liveeventsfilter.m3u'
+liveeventsfilter = 'liveeventsfilter.m3u8'
 cikis_dosyasi = 'man26.m3u'
 
 # M3U dosyalarının içeriğini oku
