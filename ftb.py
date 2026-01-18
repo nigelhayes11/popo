@@ -121,7 +121,7 @@ def main():
             name = channel['name']
             
             # EXTM3U satırını oluştur
-            lines.append(f'#EXTINF:-1 group-title="Maç Yayınları" ,{name}')
+            lines.append(f'#EXTINF:-1 group-title="SEÇ İZLE YERLİ FUTBOL" ,{name}')
             lines.append(f'#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)')
             lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
             
@@ -129,10 +129,10 @@ def main():
             full_url = f"{base_url}{cid}.m3u8"
             lines.append(full_url)
         
-        with open("karsilasmalar.m3u", "w", encoding="utf-8") as f:
+        with open("ftb.m3u", "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
         
-        print(f"✅ karsilasmalar.m3u başarıyla oluşturuldu ({len(channels)} kanal)")
+        print(f"✅ ftb.m3u başarıyla oluşturuldu ({len(channels)} kanal)")
         return 0
         
     except Exception as e:
