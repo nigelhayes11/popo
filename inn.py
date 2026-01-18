@@ -8,8 +8,8 @@ def main():
         active_domain = None
         print("🔍 Aktif domain aranıyor...")
         
-        for i in range(1204, 2000):
-            url = f"https://inattv{i}.xyz/"
+        for i in range(1497, 2000):
+            url = f"https://trgoals{i}.xyz/"
             try:
                 r = requests.head(url, timeout=5)
                 if r.status_code == 200:
@@ -21,10 +21,9 @@ def main():
         
         if not active_domain:
             print("⚠️  Aktif domain bulunamadı. Boş M3U dosyası oluşturuluyor...")
-            create_empty_m3u()
             return 0
         
-        # İlk kanal ID'si al
+        """
         print("📡 Kanal ID'si alınıyor...")
         try:
             html = requests.get(active_domain, timeout=10).text
@@ -32,7 +31,6 @@ def main():
             
             if not m:
                 print("⚠️  Kanal ID bulunamadı. Boş M3U dosyası oluşturuluyor...")
-                create_empty_m3u()
                 return 0
             
             first_id = m.group(1)
@@ -40,18 +38,17 @@ def main():
             
         except Exception as e:
             print(f"⚠️  HTML alınırken hata: {str(e)}")
-            create_empty_m3u()
             return 0
+        """
         
         # Base URL çek
         print("🔗 Base URL alınıyor...")
         try:
-            event_source = requests.get(active_domain + "channel.html?id=" + first_id, timeout=10).text
+            event_source = requests.get(active_domain + "channel.html?id=" + "yayinzirve", timeout=10).text
             b = re.search(r'B_URL\s*=\s*["\']([^"\']+)["\']', event_source)
             
             if not b:
                 print("⚠️  Base URL bulunamadı. Boş M3U dosyası oluşturuluyor...")
-                create_empty_m3u()
                 return 0
             
             base_url = b.group(1)
@@ -59,7 +56,6 @@ def main():
             
         except Exception as e:
             print(f"⚠️  Event source alınırken hata: {str(e)}")
-            create_empty_m3u()
             return 0
         
         # Kanal listesi
@@ -98,10 +94,10 @@ def main():
         lines = ["\n"]
         for cid, details in channel_ids.items():
             name = details[0]  # Listenin ilk elemanı: Kanal Adı (Örn: beIN Sports 1 A)
-            title = details[1] # Listenin ikinci elemanı: Grup (Örn: Inat TV)
+            title = details[1] # Listenin ikinci elemanı: Grup (Örn: TRGOL TV)
             
             # EXTM3U satırını oluştur
-            lines.append(f'#EXTINF:-1 group-title="Inat TV" ,{name}')
+            lines.append(f'#EXTINF:-1 group-title="TRGOL TV" ,{name}')
             lines.append(f'#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5)')
             lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
             
@@ -118,27 +114,11 @@ def main():
     except Exception as e:
         print(f"❌ Beklenmeyen hata: {str(e)}")
         print("⚠️  Boş M3U dosyası oluşturuluyor...")
-        create_empty_m3u()
         return 0
-
-def create_empty_m3u():
-    """Hata durumunda boş/placeholder M3U dosyası oluştur"""
-    try:
-        with open("inn.m3u", "w", encoding="utf-8") as f:
-            f.write("#EXTM3U\n")
-            f.write("# Kanal listesi şu anda kullanılamıyor\n")
-        print("✅ Placeholder M3U dosyası oluşturuldu")
-    except Exception as e:
-        print(f"❌ M3U dosyası oluşturulamadı: {str(e)}")
 
 if __name__ == "__main__":
     exit_code = main()
     sys.exit(exit_code)
-
-
-
-
-
 
 
 
