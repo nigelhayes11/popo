@@ -1,5 +1,5 @@
 import requests
-from selectolax.parser import HTMLParser
+import re
 from urllib.parse import urljoin
 
 BASE_URL = "https://streamhub.pro/"
@@ -13,30 +13,32 @@ HEADERS = {
 def get_events():
     r = requests.get(urljoin(BASE_URL, "events"), headers=HEADERS, timeout=15)
     r.raise_for_status()
+    html = r.text
 
-    html = HTMLParser(r.text)
     events = []
 
-    for ev in html.css(".section-event"):
-        title = "Live Event"
+    # event bloklarını yakala
+    blocks = re.findall(r'<div class="section-event".*?</div>\s*</div>', html, re.S)
 
-        teams = ev.css_first(".event-competitors")
-        if teams:
-            title = teams.text(strip=True).replace("vs.", "vs")
+    for block in blocks:
+        # Takımlar
+        teams = re.search(r'<div class="event-competitors">(.*?)</div>', block, re.S)
+        title = teams.group(1).strip() if teams else "Live Event"
+        title = re.sub(r'\s+', ' ', title).replace("vs.", "vs")
 
-        link_node = ev.css_first("a")
-        if not link_node:
+        # Link
+        link_m = re.search(r'href="([^"]+)"', block)
+        if not link_m:
             continue
+        link = urljoin(BASE_URL, link_m.group(1))
 
-        link = urljoin(BASE_URL, link_node.attributes.get("href"))
-
-        status_node = ev.css_first(".event-countdown")
-        status = status_node.text(strip=True).lower() if status_node else ""
+        # Canlı mı?
+        live = "LIVE" in block.upper()
 
         events.append({
             "title": title,
             "url": link,
-            "live": "live" in status
+            "live": live
         })
 
     return events
@@ -57,7 +59,7 @@ def write_m3u(events):
 def main():
     events = get_events()
     if not events:
-        print("⚠️ Maç bulunamadı ama dosya yine de oluşturulacak")
+        print("⚠️ Maç bulunamadı ama dosya yine de oluşturuldu")
 
     write_m3u(events)
 
