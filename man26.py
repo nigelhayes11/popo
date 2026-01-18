@@ -53,7 +53,7 @@ birlesik_icerik = (
     rnl_icerik +
     liveeventsfilter_icerik +
     
-)
+
 
 # Yeni dosyaya yaz
 with open(cikis_dosyasi, 'w', encoding='utf-8') as f:
