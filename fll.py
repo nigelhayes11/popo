@@ -26,7 +26,7 @@ an_icerik = oku_m3u(an)
 kbl_icerik = oku_m3u(kbl)
 ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
-liveeventsfilter_icerik = oku_m3u(liveeventsfilter)
+liveeventsfilter_icerik = oku_m3u8(liveeventsfilter)
 
 # Birleştir
 birlesik_icerik = kbl_icerik + ftb_icerik + r_icerik + r2_icerik + inn_icerik + selcuk_icerik + an_icerik + ne_icerik + rnl_icerik + liveeventsfilter_icerik  
