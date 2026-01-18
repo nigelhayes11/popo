@@ -54,9 +54,9 @@ jobs:
       - name: rnl.py Çalıştır
         continue-on-error: true
         run: python rnl.py        
-      - name: man26.py Çalıştır
+      - name: fll.py Çalıştır
         continue-on-error: true
-        run: python man26.py 
+        run: python fll.py 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
