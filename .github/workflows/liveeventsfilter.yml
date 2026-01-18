@@ -1,40 +1,36 @@
-name: 🚀 Update Merged Playlist 📺
+name: 🚀 Update Live Events Playlist 📺
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # ⏰ Every 30 minutes (UTC)
-  workflow_dispatch:        # 🔘 Manual trigger
+    - cron: '*/10 * * * *'   # ⏰ Every 10 minutes (UTC)
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  scrape:
+  update:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
       - name: 🐍 Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: 📦 Install required Python dependency
-        run: pip3 install requests
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests
 
-      - name: 🎯 Run scraping script
-        run: curl -L -o events.m3u8 https://raw.githubusercontent.com/doms9/iptv/refs/heads/default/M3U8/events.m3u8
+      - name: 🎯 Run live events filter
+        run: |
+          python3 liveeventsfilter.py liveevents.m3u8 liveeventsfilter.m3u8
 
-             python3 liveeventsfilter.py events.m3u8 liveeventsfilter.m3u8
-
-
-      - name: 💾 Commit & Safely Push if Playlist Changed
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 💾 Commit & Push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions@users.noreply.github.com"
@@ -42,24 +38,9 @@ jobs:
           git add liveeventsfilter.m3u8
 
           if git diff --cached --quiet; then
-            echo "✅ No changes to commit"
+            echo "✅ No changes detected"
             exit 0
           fi
 
-          git commit -m "🔁 Update playlist $(date -u +'%a %b %d %T UTC %Y')"
-
-          sleep $((RANDOM % 10 + 5))
-
-          if ! git push origin main; then
-            echo "⚠️ Push rejected. Trying safe fetch + rebase..."
-            git pull origin main --rebase || {
-              echo "❌ Rebase failed. Exiting to avoid corruption."
-              exit 1
-            }
-            git push origin main || {
-              echo "❌ Second push failed. Remote changed again."
-              exit 1
-            }
-          fi
-
-     
+          git commit -m "🔁 Update liveeventsfilter.m3u8 ($(date -u))"
+          git push
