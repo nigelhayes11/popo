@@ -1,96 +1,89 @@
 import requests
-import sys
 from pathlib import Path
 
+INPUT_M3U = "liveevents.m3u8"
+OUTPUT_M3U = "liveeventsfilter.m3u8"
+
 TIMEOUT = 10
-VALID_CONTENT_TYPES = [
+VALID_CONTENT_TYPES = {
     "application/vnd.apple.mpegurl",
     "application/x-mpegURL",
     "video/mp4",
     "audio/mpeg",
     "video/ts",
     "video/x-flv",
-]
+}
 
-def is_stream_playable(url: str, headers=None) -> bool:
+def is_stream_playable(url, headers=None):
     headers = headers or {}
     try:
-        response = requests.head(url, headers=headers, timeout=TIMEOUT, allow_redirects=True)
-        if response.status_code < 400:
-            content_type = response.headers.get("Content-Type", "").split(";")[0]
-            if content_type in VALID_CONTENT_TYPES:
+        r = requests.head(url, headers=headers, timeout=TIMEOUT, allow_redirects=True)
+        if r.status_code < 400:
+            ct = r.headers.get("Content-Type", "").split(";")[0]
+            if ct in VALID_CONTENT_TYPES:
                 return True
-    except requests.RequestException:
+    except:
         pass
 
     try:
-        response = requests.get(url, headers=headers, timeout=TIMEOUT, stream=True)
-        if response.status_code < 400:
-            content_type = response.headers.get("Content-Type", "").split(";")[0]
-            return content_type in VALID_CONTENT_TYPES
-    except requests.RequestException:
-        return False
+        r = requests.get(url, headers=headers, timeout=TIMEOUT, stream=True)
+        if r.status_code < 400:
+            ct = r.headers.get("Content-Type", "").split(";")[0]
+            return ct in VALID_CONTENT_TYPES
+    except:
+        pass
 
     return False
 
-def filter_m3u_playlist(input_path: str, output_path: str):
-    with open(input_path, "r", encoding="utf-8") as f:
-        lines = [line.rstrip() for line in f]
 
-    output_lines = ["#EXTM3U"]
-    buffer_tags = []
-    buffer_vlcopt = []
+def main():
+    if not Path(INPUT_M3U).exists():
+        print("❌ liveevents.m3u8 yok")
+        return
+
+    with open(INPUT_M3U, "r", encoding="utf-8") as f:
+        lines = [l.rstrip() for l in f]
+
+    output = ["#EXTM3U"]
+    tags = []
+    vlcopts = []
 
     for line in lines:
         if line.startswith("#EXTINF"):
-            buffer_tags.append(line)
+            tags = [line]
+            vlcopts = []
         elif line.startswith("#EXTVLCOPT"):
-            buffer_vlcopt.append(line)
-        elif line.strip():
-            url = line.strip()
-            # Convert VLC options to HTTP headers
+            vlcopts.append(line)
+        elif line and not line.startswith("#"):
             headers = {}
-            for opt in buffer_vlcopt:
-                if opt.startswith("#EXTVLCOPT:"):
-                    key_value = opt[len("#EXTVLCOPT:"):].split("=", 1)
-                    if len(key_value) == 2:
-                        key, value = key_value
-                        key = key.lower()
-                        if key == "http-referrer":
-                            headers["Referer"] = value
-                        elif key == "http-origin":
-                            headers["Origin"] = value
-                        elif key == "http-user-agent":
-                            headers["User-Agent"] = value
+            for opt in vlcopts:
+                kv = opt.replace("#EXTVLCOPT:", "").split("=", 1)
+                if len(kv) == 2:
+                    k, v = kv
+                    if k.lower() == "http-referrer":
+                        headers["Referer"] = v
+                    elif k.lower() == "http-origin":
+                        headers["Origin"] = v
+                    elif k.lower() == "http-user-agent":
+                        headers["User-Agent"] = v
 
-            print(f"Checking: {url}")
-            if is_stream_playable(url, headers=headers):
-                print("  ✓ Playable")
-                output_lines.extend(buffer_tags)
-                output_lines.extend(buffer_vlcopt)
-                output_lines.append(url)
+            print("Checking:", line)
+            if is_stream_playable(line, headers):
+                print("  ✓ OK")
+                output.extend(tags)
+                output.extend(vlcopts)
+                output.append(line)
             else:
-                print("  ✗ Not playable")
+                print("  ✗ FAIL")
 
-            buffer_tags = []
-            buffer_vlcopt = []
+            tags = []
+            vlcopts = []
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(output_lines) + "\n")
+    with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
+        f.write("\n".join(output) + "\n")
 
-    print(f"\nSaved filtered playlist to: {output_path}")
+    print(f"\n✅ Oluşturuldu: {OUTPUT_M3U}")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python filter_m3u_playlist.py input.m3u output.m3u")
-        sys.exit(1)
-
-    input_m3u = sys.argv[1]
-    output_m3u = sys.argv[2]
-
-    if not Path(input_m3u).exists():
-        print("Input file does not exist.")
-        sys.exit(1)
-
-    filter_m3u_playlist(input_m3u, output_m3u)
+    main()
