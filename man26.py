@@ -37,7 +37,7 @@ kbl_icerik = oku_m3u(kbl)
 ne_icerik = oku_m3u(ne)
 rnl_icerik = oku_m3u(rnl)
 liveeventsfilter_icerik = oku_m3u(liveeventsfilter)
-manual_icerik = oku_m3u(manual_additions)  # Opsiyonel manuel eklemeler
+
 
 # Birleştir (sıralı ve bitişik)
 birlesik_icerik = (
@@ -52,7 +52,7 @@ birlesik_icerik = (
     ne_icerik +
     rnl_icerik +
     liveeventsfilter_icerik +
-    manual_icerik
+    
 )
 
 # Yeni dosyaya yaz
