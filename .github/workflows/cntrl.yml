@@ -57,6 +57,9 @@ jobs:
       - name: fll.py Çalıştır
         continue-on-error: true
         run: python fll.py 
+        - name: neonspor.py Çalıştır
+        continue-on-error: true
+        run: python neonspor.py 
       - name: Değişiklik Kontrolü
         id: degisiklik_kontrol
         run: |
