@@ -57,7 +57,7 @@ jobs:
       - name: fll.py Çalıştır
         continue-on-error: true
         run: python fll.py 
-        - name: neon.py Çalıştır
+      - name: neon.py Çalıştır
         continue-on-error: true
         run: python neon.py 
       - name: Değişiklik Kontrolü
