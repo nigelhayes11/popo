@@ -165,4 +165,5 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
         f.write(f'#EXTINF:-1 tvg-name="{c["name"]}" tvg-language="Turkish" tvg-country="TR" tvg-logo="{c["logo"]}" group-title="{c["group"]}", {c["name"]}\n')
         f.write(c["url"] + "\n\n")
 
-print("🎯 jesttv.m3u hazır ve tüm kanallar eklendi")
+print("🎯 neon.m3u hazır ve tüm kanallar eklendi")
+
