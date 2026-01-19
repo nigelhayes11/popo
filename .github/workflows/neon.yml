@@ -1,208 +1,31 @@
-name: NeonSpor
+name: Neon Auto M3U
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"
-
-env:
-  SOURCE_M3U_URL: "https://raw.githubusercontent.com/primatzeka/kurbaga/main/NeonSpor/NeonSpor.m3u"
-  DESTINATION_M3U_FILE: "main.m3u"
-  NEXA_GROUP_TITLE: "Spor - Maç"
-  NEON_GROUP_TITLE: "Spor - Maç"
-  START_MARKER: "# NEON_START"
-  END_MARKER: "# NEON_END"
+    - cron: "*/30 * * * *"   # 30 dakikada bir
+  workflow_dispatch:
 
 jobs:
-  sync-playlist-block:
-    strategy:
-      matrix:
-        branch: [main, master]
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Check out repository
+      - name: Repo checkout
         uses: actions/checkout@v4
 
-      - name: Install Python dependencies
-        run: |
-          pip install httpx --break-system-packages
-
-      - name: Download external M3U file
-        run: |
-          curl -L -o external_playlist.m3u "${{ env.SOURCE_M3U_URL }}"
-          echo "External M3U file downloaded."
-
-      - name: Rebuild Remote Content Block with Nexa and Neon
-        run: |
-          python3 <<'EOF'
-          import os
-          import re
-          from httpx import Client
-
-          # ============== NexaTVManager Class ==============
-          class NexaTVManager:
-              def __init__(self, group_title="NexaTV"):
-                  self.proxy_prefix = "https://api.codetabs.com/v1/proxy/?quest="
-                  self.base_stream_url = "https://andro.okan9gote10sokan.cfd/checklist/"
-                  self.logo_url = "https://i.hizliresim.com/8xzjgqv.jpg"
-                  self.group_title = group_title
-                  self.channels = [
-                      {"name": "TR:beIN Sport 1 HD", "path": "androstreamlivebs1.m3u8"},
-                      {"name": "TR:beIN Sport 2 HD", "path": "androstreamlivebs2.m3u8"},
-                      {"name": "TR:beIN Sport 3 HD", "path": "androstreamlivebs3.m3u8"},
-                      {"name": "TR:beIN Sport 4 HD", "path": "androstreamlivebs4.m3u8"},
-                      {"name": "TR:beIN Sport 5 HD", "path": "androstreamlivebs5.m3u8"},
-                      {"name": "TR:beIN Sport Max 1 HD", "path": "androstreamlivebsm1.m3u8"},
-                      {"name": "TR:beIN Sport Max 2 HD", "path": "androstreamlivebsm2.m3u8"},
-                      {"name": "TR:S Sport 1 HD", "path": "androstreamlivess1.m3u8"},
-                      {"name": "TR:S Sport 2 HD", "path": "androstreamlivess2.m3u8"},
-                      {"name": "TR:Tivibu Sport HD", "path": "androstreamlivets.m3u8"},
-                      {"name": "TR:Tivibu Sport 1 HD", "path": "androstreamlivets1.m3u8"},
-                      {"name": "TR:Tivibu Sport 2 HD", "path": "androstreamlivets2.m3u8"},
-                      {"name": "TR:Tivibu Sport 3 HD", "path": "androstreamlivets3.m3u8"},
-                      {"name": "TR:Tivibu Sport 4 HD", "path": "androstreamlivets4.m3u8"},
-                      {"name": "TR:Smart Sport 1 HD", "path": "androstreamlivesm1.m3u8"},
-                      {"name": "TR:Smart Sport 2 HD", "path": "androstreamlivesm2.m3u8"},
-                      {"name": "TR:Euro Sport 1 HD", "path": "androstreamlivees1.m3u8"},
-                      {"name": "TR:Euro Sport 2 HD", "path": "androstreamlivees2.m3u8"},
-                      {"name": "TR:Tabii HD", "path": "androstreamlivetb.m3u8"},
-                      {"name": "TR:Tabii 1 HD", "path": "androstreamlivetb1.m3u8"},
-                      {"name": "TR:Tabii 2 HD", "path": "androstreamlivetb2.m3u8"},
-                      {"name": "TR:Tabii 3 HD", "path": "androstreamlivetb3.m3u8"},
-                      {"name": "TR:Tabii 4 HD", "path": "androstreamlivetb4.m3u8"},
-                      {"name": "TR:Tabii 5 HD", "path": "androstreamlivetb5.m3u8"},
-                      {"name": "TR:Tabii 6 HD", "path": "androstreamlivetb6.m3u8"},
-                      {"name": "TR:Tabii 7 HD", "path": "androstreamlivetb7.m3u8"},
-                      {"name": "TR:Tabii 8 HD", "path": "androstreamlivetb8.m3u8"},
-                      {"name": "TR:Exxen HD", "path": "androstreamliveexn.m3u8"},
-                      {"name": "TR:Exxen 1 HD", "path": "androstreamliveexn1.m3u8"},
-                      {"name": "TR:Exxen 2 HD", "path": "androstreamliveexn2.m3u8"},
-                      {"name": "TR:Exxen 3 HD", "path": "androstreamliveexn3.m3u8"},
-                      {"name": "TR:Exxen 4 HD", "path": "androstreamliveexn4.m3u8"},
-                      {"name": "TR:Exxen 5 HD", "path": "androstreamliveexn5.m3u8"},
-                      {"name": "TR:Exxen 6 HD", "path": "androstreamliveexn6.m3u8"},
-                      {"name": "TR:Exxen 7 HD", "path": "androstreamliveexn7.m3u8"},
-                  ]
-
-              def calistir(self):
-                  m3u = []
-                  for channel in self.channels:
-                      real_url = f"{self.base_stream_url}{channel['path']}"
-                      stream_url = f"{self.proxy_prefix}{real_url}"
-                      m3u.append(f'#EXTINF:-1 tvg-id="sport.tr" tvg-name="{channel["name"]}" tvg-logo="{self.logo_url}" group-title="{self.group_title}",{channel["name"]}')
-                      m3u.append(stream_url)
-                  content = "\n".join(m3u)
-                  print(f"NexaTV içerik uzunluğu: {len(content)}")
-                  return content
-
-          # ============== Main Processing ==============
-          dest_file = os.getenv('DESTINATION_M3U_FILE')
-          remote_file = 'external_playlist.m3u'
-          nexa_group_title = os.getenv('NEXA_GROUP_TITLE')
-          neon_group_title = os.getenv('NEON_GROUP_TITLE')
-          start_marker = os.getenv('START_MARKER')
-          end_marker = os.getenv('END_MARKER')
-
-          # --- Step 1: Read the local file and separate content ---
-          content_before = []
-          content_after = []
-          parsing_state = 'before'
-          try:
-              with open(dest_file, 'r', encoding='utf-8') as f:
-                  for line in f:
-                      stripped_line = line.strip()
-                      if stripped_line == start_marker:
-                          parsing_state = 'between'
-                          continue
-                      elif stripped_line == end_marker:
-                          parsing_state = 'after'
-                          continue
-                      if parsing_state == 'before':
-                          content_before.append(line)
-                      elif parsing_state == 'after':
-                          content_after.append(line)
-              if parsing_state != 'after':
-                  print(f"Markers not found in '{dest_file}'. Will create them at the end.")
-                  with open(dest_file, 'r', encoding='utf-8') as f:
-                      content_before = f.readlines()
-                  content_after = []
-          except FileNotFoundError:
-              print(f"File '{dest_file}' not found. Will create it.")
-              content_before.append('#EXTM3U\n')
-
-          # --- Step 2: Get Nexa channels ---
-          print("Processing Nexa channels...")
-          nexa_manager = NexaTVManager(group_title=nexa_group_title)
-          nexa_content = nexa_manager.calistir()
-          nexa_entries = [line + '\n' for line in nexa_content.split('\n') if line.strip()]
-
-          # --- Step 3: Process the Neon remote file, preserving multi-line entries ---
-          print("Processing Neon channels...")
-          neon_entries = []
-          try:
-              with open(remote_file, 'r', encoding='utf-8') as f:
-                  lines = f.readlines()
-          except FileNotFoundError:
-              lines = []
-
-          i = 0
-          while i < len(lines):
-              line = lines[i]
-              if line.strip().startswith('#EXTINF:'):
-                  # This is the start of a channel block.
-                  entry_block = []
-                  
-                  # Modify the group-title in the #EXTINF line
-                  extinf_line = line.strip()
-                  group_title_pattern = re.compile(r'group-title="[^"]*"')
-                  new_attribute = f'group-title="{neon_group_title}"'
-                  if group_title_pattern.search(extinf_line):
-                      modified_extinf = group_title_pattern.sub(new_attribute, extinf_line)
-                  else:
-                      parts = extinf_line.rsplit(',', 1)
-                      modified_extinf = f'{parts[0]} {new_attribute},{parts[1]}'
-                  entry_block.append(modified_extinf + '\n')
-                  
-                  # Advance to the next lines and add them until we find the URL
-                  i += 1
-                  while i < len(lines):
-                      next_line = lines[i]
-                      entry_block.append(next_line)
-                      if not next_line.strip().startswith('#'):
-                          # This is the URL, so the block is complete.
-                          break
-                      i += 1
-                  
-                  neon_entries.extend(entry_block)
-              i += 1
-          
-          print(f"Processed Neon source and prepared new content block.")
-
-          # --- Step 4: Combine Nexa and Neon entries (Nexa first) ---
-          combined_entries = nexa_entries + neon_entries
-
-          # --- Step 5: Write the final file from the parts ---
-          with open(dest_file, 'w', encoding='utf-8') as f:
-              f.writelines(content_before)
-              if content_before and not content_before[-1].endswith('\n'):
-                  f.write('\n')
-              f.write(f"{start_marker}\n")
-              f.writelines(combined_entries)
-              if combined_entries and not combined_entries[-1].endswith('\n'):
-                  f.write('\n')
-              f.write(f"{end_marker}\n")
-              f.writelines(content_after)
-          
-          print(f"Successfully rebuilt the M3U file '{dest_file}' with Nexa and Neon channels.")
-          EOF
-
-      - name: Commit and push if changed
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Python setup
+        uses: actions/setup-python@v5
         with:
-          commit_message: "Update spor category with Nexa and Neon channels"
-          file_pattern: ${{ env.DESTINATION_M3U_FILE }}
-          commit_user_name: "GitHub Actions Bot"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_author: "GitHub Actions Bot <github-actions[bot]@users.noreply.github.com>"
+          python-version: "3.11"
+
+      - name: Run script
+        run: |
+          pip install requests
+          python neon.py
+
+      - name: Commit & push
+        run: |
+          git config user.name "neon-bot"
+          git config user.email "neon@bot"
+          git add neon.m3u
+          git commit -m "auto update neon m3u" || echo "No changes"
+          git push
