@@ -139,15 +139,15 @@ def main():
             if cid not in json_links:
                 continue
 
-            lines.append(f'#EXTINF:-1 group-title="Inat TV",{name}')
+            lines.append(f'#EXTINF:-1 group-title="TR GOL TV",{name}')
             lines.append('#EXTVLCOPT:http-user-agent=Mozilla/5.0')
             lines.append(f'#EXTVLCOPT:http-referrer={active_domain}')
             lines.append(json_links[cid])
 
-        with open("karsilasmalar2.m3u", "w", encoding="utf-8") as f:
+        with open("inn.m3u", "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
 
-        print("✅ karsilasmalar2.m3u başarıyla oluşturuldu")
+        print("✅ inn.m3u başarıyla oluşturuldu")
         return 0
 
     except Exception as e:
@@ -157,3 +157,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
