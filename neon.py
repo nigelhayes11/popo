@@ -109,61 +109,12 @@ with open(OUTPUT, "w", encoding="utf-8") as f:
         f.write(f'#EXTVLCOPT:http-referrer={REFERRER}\n')
         f.write(url + "\n\n")
 
-    # 🔹 Diğer sabit kanallar (senin attığın full listeyi buraya ekliyoruz)
-    other_channels = [
-        {
-            "name": "TRT 1",
-            "url": "https://tv-trt1.medya.trt.com.tr/master.m3u8",
-            "logo": "https://cms-rotf-api.tabii.com/r/int/w500/23846_1-0-465-262.jpeg",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "TRT SPOR",
-            "url": "https://tv-trtspor1.medya.trt.com.tr/master.m3u8",
-            "logo": "https://cms-rotf-api.tabii.com/r/int/w500/40480_0-0-465-261.jpeg",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "TRT Spor Yıldız",
-            "url": "https://trt.daioncdn.net/trtspor-yildiz/master.m3u8?app=web&platform=trtspor",
-            "logo": "https://cms-tabii-public-image.tabii.com/int/w500/23855_1-0-465-262.jpeg",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "TV 8",
-            "url": "https://tv8.daioncdn.net/tv8/tv8.m3u8?app=7ddc255a-ef47-4e81-ab14-c0e5f2949788&ce=3",
-            "logo": "https://www.campaigntr.com/wp-content/uploads/2014/09/tv8-logo.png",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "TV 8.5",
-            "url": "https://tv8.daioncdn.net/tv8bucuk/tv8bucuk.m3u8?app=bf58ab52-4865-4c81-b223-26b41009801e&ce=3",
-            "logo": "https://www.tvyayinakisi.com/wp-content/uploads/2021/01/tv8.5.jpg",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "A Spor",
-            "url": "https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/aspor/aspor.m3u8",
-            "logo": "https://bursasporxcom.teimg.com/crop/1280x720/bursasporx-com/uploads/2024/10/imaj-aspor.jpg",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "HTSpor",
-            "url": "https://ciner.daioncdn.net/ht-spor/ht-spor.m3u8?app=web",
-            "logo": "https://www.htspor.com/images/manifest/social-share-logo.png",
-            "group": "Diğerleri"
-        },
-        {
-            "name": "Show TV",
-            "url": "https://ciner.daioncdn.net/showtv/showtv.m3u8?app=4bc856ef-4c68-4a94-bc87-37dfaaa66558&ce=3",
-            "logo": "https://mo.ciner.com.tr/video/2023/06/15/ver1726038663/8E1C90B3C04F89681637C4909149450C_640x360.jpg",
-            "group": "Diğerleri"
-        },
-    ]
+ 
 
-    for c in other_channels:
+ for c in other_channels:
         f.write(f'#EXTINF:-1 tvg-name="{c["name"]}" tvg-language="Turkish" tvg-country="TR" tvg-logo="{c["logo"]}" group-title="{c["group"]}", {c["name"]}\n')
         f.write(c["url"] + "\n\n")
 
 print("🎯 neon.m3u hazır ve tüm kanallar eklendi")
+
 
