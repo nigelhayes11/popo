@@ -189,11 +189,6 @@ http://origin.thetvapp.to/hls/NHL28/mono.m3u8
 #EXTVLCOPT:http-origin=https://vividmosaica.com/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
 https://d13.epicquesthero.com:999/hls/do39.m3u8?md5=MXz-Xk2ssx6eDIo0s-kHOg&expires=1769180427
-#EXTINF:-1 tvg-chno="81" tvg-id="Live.Event.us" tvg-name="[Singapore Premier League] Geylang vs Tampines (FAWA)" tvg-logo="https://i.gyazo.com/4a5e9fa2525808ee4b65002b56d3450e.png" group-title="Live Events",[Singapore Premier League] Geylang vs Tampines (FAWA)
-#EXTVLCOPT:http-referrer=http://www.fawanews.sc/
-#EXTVLCOPT:http-origin=http://www.fawanews.sc/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
-http://205.237.104.133/hls/GBBB.m3u8
 #EXTINF:-1 tvg-chno="82" tvg-id="Live.Event.us" tvg-name="[Skicross Skiing] Skicross Skiing World Cup (FAWA)" tvg-logo="https://i.gyazo.com/4a5e9fa2525808ee4b65002b56d3450e.png" group-title="Live Events",[Skicross Skiing] Skicross Skiing World Cup (FAWA)
 #EXTVLCOPT:http-referrer=http://www.fawanews.sc/
 #EXTVLCOPT:http-origin=http://www.fawanews.sc/
