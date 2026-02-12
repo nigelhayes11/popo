@@ -99,6 +99,11 @@ https://red6.lumenglide.shop/playlist/44975/load-playlist
 #EXTVLCOPT:http-origin=http://www.fawanews.sc/
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
 http://195.178.110.27/hls/HYYY.m3u8
+#EXTINF:-1 tvg-chno="99" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Atlanta Hawks vs Charlotte Hornets (CDNTV)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Atlanta Hawks vs Charlotte Hornets (CDNTV)
+#EXTVLCOPT:http-referrer=https://cdn-live.tv/api/v1/channels/player/?name=sky+sport+3&code=de&user=cdnlivetv&plan=free
+#EXTVLCOPT:http-origin=https://cdn-live.tv/api/v1/channels/player/?name=sky+sport+3&code=de&user=cdnlivetv&plan=free
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
+https://edge.cdn-live.ru/secure/api/v1/de-sky-sport-3/playlist.m3u8?token=cb2199ef065ce991c1a0f71bbfe224c55cb9d04b64bf653216661ffc0a9cfb76.1770852668.3f5fe5fb2c61c554cb95fa2b12f68c46.25d0a362a444130592e27614a479ebfb.d20228a076d110463c0f6f63b67b4850&signature=a1667b32704da1847392a4d69ab93f9c23eea8a79b9a26dca0b9a976b77b4258
 #EXTINF:-1 tvg-chno="100" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Boston Celtics vs Chicago Bulls (STRMBTW)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Boston Celtics vs Chicago Bulls (STRMBTW)
 #EXTVLCOPT:http-referrer=https://streambtw.live/iframe/nba7.php
 #EXTVLCOPT:http-origin=https://streambtw.live/iframe/nba7.php
@@ -139,6 +144,11 @@ https://edge.cdn-live.ru/secure/api/v1/de-sky-sport-2/playlist.m3u8?token=d0d6f0
 #EXTVLCOPT:http-origin=https://streambtw.live/iframe/nba3.php
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
 https://play.streameast.asia/playlist/stream_nba3.m3u8?md5=llE_pjp8JCpDfd4I0VCtrg&expires=1770856249
+#EXTINF:-1 tvg-chno="112" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Cleveland Cavaliers vs Washington Wizards (TOTALSPRTK)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Cleveland Cavaliers vs Washington Wizards (TOTALSPRTK)
+#EXTVLCOPT:http-referrer=https://live3.totalsportek777.com/Cleveland-Cavaliers-vs-Washington-Wizards/57871
+#EXTVLCOPT:http-origin=https://live3.totalsportek777.com/Cleveland-Cavaliers-vs-Washington-Wizards/57871
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
+https://fes.feswalki.site/simpch17/index.m3u8?token=eyJzdHJlYW0iOiJzaW1wY2gxNyIsImlwIjoiMC4wLjAuMCIsImV4cCI6MTc3MDg1NDQ3NCwicmFuZCI6IjBjMDQwNGI0YTMwZDQ0MGIifQ.3105cdedc6ce1ca6fcd085ec53417d00171321986bff2af0a801e08a1565cb82
 #EXTINF:-1 tvg-chno="113" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Cleveland Cavaliers vs Washington Wizards (iSTRMEAST)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Cleveland Cavaliers vs Washington Wizards (iSTRMEAST)
 #EXTVLCOPT:http-referrer=https://gooz.aapmains.net
 #EXTVLCOPT:http-origin=https://gooz.aapmains.net
@@ -149,11 +159,11 @@ https://pfl2.orbitorbit.space/playlist/44999/load-playlist
 #EXTVLCOPT:http-origin=https://streambtw.live/iframe/nba8.php
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
 https://play.streameast.asia/playlist/stream_nba8.m3u8?md5=ViCnCsGbWbWAaIuzPMhsig&expires=1770856250
-#EXTINF:-1 tvg-chno="130" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Milwaukee Bucks @ Orlando Magic (TVAPP)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Milwaukee Bucks @ Orlando Magic (TVAPP)
-#EXTVLCOPT:http-referrer=https://thetvapp.to
-#EXTVLCOPT:http-origin=https://thetvapp.to
+#EXTINF:-1 tvg-chno="133" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Milwaukee Bucks vs Orlando Magic (CDNTV)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Milwaukee Bucks vs Orlando Magic (CDNTV)
+#EXTVLCOPT:http-referrer=https://cdn-live.tv/api/v1/channels/player/?name=sky+sport+254&code=it&user=cdnlivetv&plan=free
+#EXTVLCOPT:http-origin=https://cdn-live.tv/api/v1/channels/player/?name=sky+sport+254&code=it&user=cdnlivetv&plan=free
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0
-https://v13.thetvapp.to/hls/NBA02/tracks-v1a1/mono.m3u8?token=wFI9lyTc0m7AR4WnJ60m2A&expires=1770874257&user_id=YUpJazRwaGVNYUVGbFFZQ01Tc2sxSWV6MVFrOUp2bWlMQ2xNZTVxNg==
+https://edge.cdn-live.ru/secure/api/v1/it-sky-sport-254/playlist.m3u8?token=587e3f2dfebd4e6e17fd0955d866065c1cf3737d1a38a9fe083b87bf0e54f5d1.1770852671.0ab792d94f70ac31c2cee6fb09c67994.f4a7a8395f3090c3f9defed4899e57c9.f4406cd9b8a9203e6f9507043036a1cd&signature=163535a7721ef38e6eeecb4fc4d9b8761513f6608ed3e98dc207de246cd3e9b5
 #EXTINF:-1 tvg-chno="134" tvg-id="NBA.Basketball.Dummy.us" tvg-name="[NBA] Minnesota Timberwolves vs Portland Trail Blazers (STRMBTW)" tvg-logo="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png" group-title="Live Events",[NBA] Minnesota Timberwolves vs Portland Trail Blazers (STRMBTW)
 #EXTVLCOPT:http-referrer=https://streambtw.live/iframe/nba9.php
 #EXTVLCOPT:http-origin=https://streambtw.live/iframe/nba9.php
